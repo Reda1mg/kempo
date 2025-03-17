@@ -2,70 +2,142 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Compétiteurs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-
-        .header-title {
-            font-family: 'Arial Black', sans-serif;
-            font-size: 2rem;
-            color: #093a5e;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .table th {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-        }
-
-        .table td {
-            text-align: center;
-        }
-
-        .btn-action {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-action button {
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-edit {
-            background-color: #ffc107;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .btn-delete {
-            background-color: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <style>
+        /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+    padding: 0;
+}
+
+/* Header */
+.header-title {
+    font-size: 2rem;
+    color: #093a5e;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Filters */
+.filters-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-item label {
+    font-weight: bold;
+}
+
+input, select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Add Competitor Button */
+.add-button {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.btn-add {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Table */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+th {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Buttons */
+.btn-action {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-edit, .btn-delete {
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.btn-edit {
+    background-color: #ffc107;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filters-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-item {
+        width: 100%;
+    }
+
+    .btn-add {
+        width: 100%;
+    }
+}
+
+    </style>
     <h1 class="header-title">Liste des Compétiteurs</h1>
 
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="searchCompetitor" class="form-label">🔎 Rechercher par nom :</label>
-            <input type="text" id="searchCompetitor" class="form-control" placeholder="Nom du compétiteur" onkeyup="filterCompetitors()">
+    <!-- Filters Section -->
+    <div class="filters-container">
+        <div class="filter-item">
+            <label for="searchCompetitor"><span>🔎</span> Rechercher :</label>
+            <input type="text" id="searchCompetitor" placeholder="Nom du compétiteur" onkeyup="filterCompetitors()">
         </div>
-        <div class="col-md-6">
-            <label for="clubSelect" class="form-label">🏢 Filtrer par club :</label>
-            <select id="clubSelect" class="form-select" onchange="filterCompetitors()">
+        <div class="filter-item">
+            <label for="clubSelect"><span>🏢</span> Filtrer par club :</label>
+            <select id="clubSelect" onchange="filterCompetitors()">
                 <option value="">Tous les clubs</option>
                 <option value="Nancy Kempo">Nancy Kempo</option>
                 <option value="Châtenois Martial">Châtenois Martial</option>
@@ -75,12 +147,14 @@
         </div>
     </div>
 
-    <div class="text-end mb-3">
-        <button class="btn btn-success">➕ Ajouter un Compétiteur</button>
+    <!-- Add Competitor Button -->
+    <div class="add-button">
+        <button class="btn-add">➕ Ajouter un Compétiteur</button>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered">
+    <!-- Competitors Table -->
+    <div class="table-container">
+        <table>
             <thead>
                 <tr>
                     <th>👤 Nom</th>
@@ -146,6 +220,5 @@
         }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

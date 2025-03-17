@@ -1,8 +1,14 @@
-
+import styles from './Competiteur.module.css'
+import Filter from './components/Filter';
+import CompetiteursTable from './components/CompetiteursTable';
 function Competiteurs(){
     return (
-        <div>
-            <h1 class="header-title">Liste des Compétiteurs</h1>
-        </div>
+        <div className="">
+        <h1 className={styles.title}>Liste des Compétiteurs</h1>
+        <Filter /> 
+        <CompetiteursTable />
+    </div>
     )
 }
+
+export default Competiteurs
