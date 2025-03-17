@@ -1,27 +1,39 @@
+import styles from "./Filter.module.css"; 
 
-function FiltreCompetiteur(){
-    return (
-        
-    <div className="row mb-3">
-        <div className="col-md-6">
-            <label htmlFor="searchCompetitor" className="form-label">🔎 Rechercher par nom :</label>
-            <input type="text" id="searchCompetitor" 
-            className="form-control" 
-            placeholder="Nom du compétiteur" 
-            >
-        </div>
-        <div className="col-md-6">
-            <label for="clubSelect" className="form-label">🏢 Filtrer par club :</label>
-            <select id="clubSelect" className="form-select" onchange="filterCompetitors()">
-                <option value="">Tous les clubs</option>
-                <option value="Nancy Kempo">Nancy Kempo</option>
-                <option value="Châtenois Martial">Châtenois Martial</option>
-                <option value="Metz Warriors">Metz Warriors</option>
-                <option value="Épinal Combat">Épinal Combat</option>
-            </select>
-        </div>
+const Filter = () => {
+  return (
+    <div className={styles.filtersContainer}>
+      {/* Search Input */}
+      <div className={styles.filterItem}>
+        <label htmlFor="search">
+          <span>🔎</span> Rechercher :
+        </label>
+        <input type="text" id="search" placeholder="Nom du tournoi" />
+      </div>
+
+      {/* Club Select Dropdown */}
+      <div className={styles.filterItem}>
+        <label htmlFor="clubFilter">
+          <span>🏢</span> Filtrer par club :
+        </label>
+        <select id="clubFilter">
+          <option value="">Tous les clubs</option>
+          <option value="Nancy Kempo">Nancy Kempo</option>
+          <option value="Châtenois Martial">Châtenois Martial</option>
+          <option value="Metz Warriors">Metz Warriors</option>
+          <option value="Épinal Combat">Épinal Combat</option>
+        </select>
+      </div>
+
+      {/* Date Filter */}
+      <div className={styles.filterItem}>
+        <label htmlFor="dateFilter">
+          <span>📅</span> Filtrer par date :
+        </label>
+        <input type="date" id="dateFilter" />
+      </div>
     </div>
-        
-    )
-}
-export default FiltreCompetiteur
+  );
+};
+
+export default Filter;
