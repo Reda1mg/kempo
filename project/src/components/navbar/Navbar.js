@@ -14,12 +14,13 @@ const NavBar = () => {
 
             {/* Navigation Menu */}
             <ul className={style["menu"]}>
-                <li>🏠 Accueil</li>
+            <a href='/'><li>🏠 Accueil</li></a>
                 <li>📅 Tous les Tournois</li>
                 <li>📊 Score Board</li>
-                <li>👥 Compétiteurs</li>
-                <li>⚙️ Paramètres</li>
+                <a href='/competiteurs'><li>👥 Compétiteurs</li></a>
+                {/* <li>⚙️ Paramètres</li> */}
                 <li>🔧 Administration</li>
+        
             </ul>
 
             {/* Logout */}
