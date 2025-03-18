@@ -1,35 +1,22 @@
-import style from './nav.module.css'
+import React from "react";
+import { Link } from "react-router-dom";
+import style from "./nav.module.css";
 
 const NavBar = () => {
-    // ------------js code-------
     return (
-        // --------jsx (html) / main div (unique)
         <div className={style.sidebar}>
-
-            {/* User Info */}
-            <div className={style["user-info"]}> 
-                <p>🧑‍💼 Connecté en tant que :</p>
-                <h3>Jean Dupont</h3>
+            <div className={style["user-info"]}>
+                <img src="/logo.png" alt="Tournament Logo" className={style.logo} />
             </div>
 
-            {/* Navigation Menu */}
-            <ul className={style["menu"]}>
-            <a href='/'><li>🏠 Accueil</li></a>
+            <ul className={style.menu}>
+                <Link to="/"><li>🏠 Accueil</li></Link>
                 <li>📅 Tous les Tournois</li>
                 <li>📊 Score Board</li>
-                <a href='/competiteurs'><li>👥 Compétiteurs</li></a>
-                {/* <li>⚙️ Paramètres</li> */}
-                <li>🔧 Administration</li>
-        
+                <Link to="/competiteurs"><li>👥 Compétiteurs</li></Link>
             </ul>
-
-            {/* Logout */}
-            <div className={style["logout"]}>
-                <p>🚪 Déconnexion</p>
-            </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default NavBar
+export default NavBar;

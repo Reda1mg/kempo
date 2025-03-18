@@ -1,13 +1,13 @@
 import React from "react";
-import styles from "./TournoiTable.module.css"; // Import CSS for styling
+import { Link } from "react-router-dom";
+import styles from "./TournoiTable.module.css"; 
 
 const TournoiTable = () => {
-  // we put js above the return
   const tournois = [
-    { name: "Tournoi Régional", date: "15/04/2024", location: "Nancy", organizer: "Nancy Kempo" },
-    { name: "Championnat National", date: "22/05/2024", location: "Châtenois", organizer: "Châtenois Martial" },
-    { name: "Open International", date: "05/06/2024", location: "Metz", organizer: "Metz Warriors" },
-    { name: "Coupe d’été", date: "20/07/2024", location: "Épinal", organizer: "Épinal Combat" },
+    { id: 1, name: "Tournoi Régional", date: "15/04/2024", location: "Nancy", organizer: "Nancy Kempo" },
+    { id: 2, name: "Championnat National", date: "22/05/2024", location: "Châtenois", organizer: "Châtenois Martial" },
+    { id: 3, name: "Open International", date: "05/06/2024", location: "Metz", organizer: "Metz Warriors" },
+    { id: 4, name: "Coupe d’été", date: "20/07/2024", location: "Épinal", organizer: "Épinal Combat" },
   ];
 
   return (
@@ -17,20 +17,22 @@ const TournoiTable = () => {
           <tr>
             <th>🏆 Nom du Tournoi</th>
             <th>📅 Date</th>
-            <th>📍 Lieu</th>
-            <th>🏛️ Club Organisateur</th>
+            {/* <th>📍 Lieu</th> */}
+            {/* <th>🏛️ Club Organisateur</th> */}
             <th>🔍 Actions</th>
           </tr>
         </thead>
         <tbody>
-          {tournois.map((tournoi, index) => (
-            <tr key={index}> {/* equivalent a for each tournois[index]*/}
+          {tournois.map((tournoi) => (
+            <tr key={tournoi.id}>
               <td>{tournoi.name}</td>
               <td>{tournoi.date}</td>
-              <td>{tournoi.location}</td>
-              <td>{tournoi.organizer}</td>
+              {/* <td>{tournoi.location}</td> */}
+              {/* <td>{tournoi.organizer}</td> */}
               <td>
-                <button className={styles["details-btn"]}>Voir Détails</button>
+                <Link to={`/tournoiDetails/${tournoi.id}`}>
+                  <button className={styles["details-btn"]}>Voir Détails</button>
+                </Link>
               </td>
             </tr>
           ))}
