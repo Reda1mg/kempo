@@ -1,5 +1,5 @@
 import styles from "./Filters.module.css";
-
+import CreationTournoi from './CreationTournoi'
 const Filters = () => {
   return (
     <div className={styles.filtersContainer}>
@@ -34,8 +34,7 @@ const Filters = () => {
           <option value="Châtenois Martial">Femmes</option>
         </select>
       </div> 
-      {/* Create Tournament Button */}
-      <button className={styles.createBtn}>+ Créer un Tournoi</button>
+      <div className={styles.createBtn}><CreationTournoi/></div>
     </div>
   );
 };
