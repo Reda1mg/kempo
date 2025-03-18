@@ -2,9 +2,9 @@ import styles from "./CompetiteursTables.module.css";
 
 const CompetitorTable = () => {
   const competitors = [
-    { name: "Jean Martin", grade: "Ceinture Noire", birthDate: "12/03/1990", club: "Nancy Kempo", category: "-75kg" },
-    { name: "Paul Dupont", grade: "Ceinture Bleue", birthDate: "05/07/1995", club: "Châtenois Martial", category: "-80kg" },
-    { name: "Lucie Bernard", grade: "Ceinture Verte", birthDate: "20/11/1998", club: "Metz Warriors", category: "-60kg" },
+    { name: "Jean Martin", grade: "Ceinture Noire", birthDate: "12/03/1990", category: "-75kg" },
+    { name: "Paul Dupont", grade: "Ceinture Bleue", birthDate: "05/07/1995",  category: "-80kg" },
+    { name: "Lucie Bernard", grade: "Ceinture Verte", birthDate: "20/11/1998", category: "-60kg" },
   ];
 
   return (
@@ -20,7 +20,7 @@ const CompetitorTable = () => {
               <th>👤 Nom</th>
               <th>🏆 Grade</th>
               <th>📅 Date de Naissance</th>
-              <th>🏢 Club</th>
+              {/* <th>🏢 Club</th> */}
               <th>⚖️ Catégorie</th>
               <th>⚙️ Actions</th>
             </tr>
@@ -31,7 +31,7 @@ const CompetitorTable = () => {
                 <td>{comp.name}</td>
                 <td>{comp.grade}</td>
                 <td>{comp.birthDate}</td>
-                <td>{comp.club}</td>
+                {/* <td>{comp.club}</td> */}
                 <td>{comp.category}</td>
                 <td className={styles.btnAction}>
                   <button className={styles.btnEdit}>✏️</button>

@@ -11,14 +11,14 @@ const Filters = () => {
 
       {/* Filter by Club */}
       <div className={styles.filterItem}>
-        <label htmlFor="clubFilter">🏛️ Filtrer par club :</label>
+        {/* <label htmlFor="clubFilter">🏛️ Filtrer par club :</label>
         <select id="clubFilter">
           <option value="">Tous les clubs</option>
           <option value="Nancy Kempo">Nancy Kempo</option>
           <option value="Châtenois Martial">Châtenois Martial</option>
           <option value="Metz Warriors">Metz Warriors</option>
           <option value="Épinal Combat">Épinal Combat</option>
-        </select>
+        </select> */}
       </div>
 
       <div className={styles.filterItem}>

@@ -13,16 +13,16 @@ const Filter = () => {
 
       {/* Club Select Dropdown */}
       <div className={styles.filterItem}>
-        <label htmlFor="clubFilter">
+        {/* <label htmlFor="clubFilter">
           <span>🏢</span> Filtrer par club :
-        </label>
-        <select id="clubFilter">
+        </label> */}
+        {/* <select id="clubFilter">
           <option value="">Tous les clubs</option>
           <option value="Nancy Kempo">Nancy Kempo</option>
           <option value="Châtenois Martial">Châtenois Martial</option>
           <option value="Metz Warriors">Metz Warriors</option>
           <option value="Épinal Combat">Épinal Combat</option>
-        </select>
+        </select> */}
       </div>
 
       {/* Date Filter */}

@@ -12,11 +12,9 @@ function App() {
         <Routes>
           <Route path='/' element={<div className='content'><Home /></div>}></Route>
           <Route path='/competiteurs' element={<div className='content'><Competiteurs /></div>}></Route>
-          <Route path='/tournoiDetails' element={<TournoiDetails />}></Route>
+          <Route path='/tournoiDetails/:id' element={<TournoiDetails />}></Route>
         </Routes>
-
       </Router>
-
     </div>
   );
 }
