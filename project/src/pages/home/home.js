@@ -6,7 +6,7 @@ function Home(){
     return(
     <div className="">
       <h1 className = {styles.title}>Liste des Tournois</h1>
-      <Filters />
+      
       <TournoiTable />
 
     </div>
