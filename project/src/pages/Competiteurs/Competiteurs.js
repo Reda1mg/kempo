@@ -5,7 +5,7 @@ function Competiteurs(){
     return (
         <div className="">
         <h1 className={styles.title}>Liste des Compétiteurs</h1>
-        <Filter /> 
+
         <CompetiteursTable />
     </div>
     )

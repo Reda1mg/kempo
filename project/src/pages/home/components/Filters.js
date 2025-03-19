@@ -1,40 +1,50 @@
 import styles from "./Filters.module.css";
-import CreationTournoi from './CreationTournoi'
-const Filters = () => {
+import CreationTournoi from './CreationTournoi';
+
+const Filters = ({ searchQuery, setSearchQuery, selectedDate, setSelectedDate, selectedCategory, setSelectedCategory }) => {
   return (
     <div className={styles.filtersContainer}>
-      {/* Search Tournament */}
+      {/* 🔎 Search by Name */}
       <div className={styles.filterItem}>
         <label htmlFor="search"><span>🔎</span> Rechercher par nom :</label>
-        <input type="text" id="search" placeholder="Nom du tournoi" />
+        <input 
+          type="text"
+          id="search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Nom du tournoi" 
+        />
       </div>
 
-      {/* Filter by Club */}
+      {/* 📅 Filter by Date */}
       <div className={styles.filterItem}>
-        {/* <label htmlFor="clubFilter">🏛️ Filtrer par club :</label>
-        <select id="clubFilter">
-          <option value="">Tous les clubs</option>
-          <option value="Nancy Kempo">Nancy Kempo</option>
-          <option value="Châtenois Martial">Châtenois Martial</option>
-          <option value="Metz Warriors">Metz Warriors</option>
-          <option value="Épinal Combat">Épinal Combat</option>
-        </select> */}
+        <label htmlFor="dateFilter"><span>📅</span> Filtrer par date :</label>
+        <input 
+          type="date" 
+          id="dateFilter"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        />
       </div>
 
+      {/* 📊 Filter by Category */}
       <div className={styles.filterItem}>
-        <label htmlFor="dateFilter">📅 Filtrer par date :</label>
-        <input type="date" id="dateFilter" />
-      </div>
-
-      <div className={styles.filterItem}>
-        <label htmlFor="dateFilter">📅 Filtrer par categories :</label>
-        <select id="clubFilter">
-          <option value="">Tous les categories</option>
-          <option value="Nancy Kempo">Hommes</option>
-          <option value="Châtenois Martial">Femmes</option>
+        <label htmlFor="categoryFilter"><span>📊</span> Filtrer par catégorie :</label>
+        <select 
+          id="categoryFilter"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="">Toutes les catégories</option>
+          <option value="Hommes">Hommes</option>
+          <option value="Femmes">Femmes</option>
         </select>
       </div> 
-      <div className={styles.createBtn}><CreationTournoi/></div>
+
+      {/* ➕ Create Tournament Button */}
+      <div className={styles.createBtn}>
+        <CreationTournoi/>
+      </div>
     </div>
   );
 };
