@@ -1,31 +1,28 @@
-import styles from "./Filter.module.css"; 
 
-const Filter = () => {
+import React from "react";
+import styles from "./Filter.module.css";
+
+const Filter = ({ searchQuery, setSearchQuery }) => {  
+  if (!setSearchQuery) {
+    
+    return null;
+  }
+
   return (
     <div className={styles.filtersContainer}>
-      {/* Search Input */}
       <div className={styles.filterItem}>
         <label htmlFor="search">
-          <span>🔎</span> Rechercher :
+          <span>🔎</span> Rechercher:
         </label>
-        <input type="text" id="search" placeholder="Nom du tournoi" />
+        <input
+          type="text"
+          id="search"
+          placeholder="Nom du compétiteur"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}  
+        />
       </div>
-
-      {/* Club Select Dropdown */}
-      <div className={styles.filterItem}>
-        {/* <label htmlFor="clubFilter">
-          <span>🏢</span> Filtrer par club :
-        </label> */}
-        {/* <select id="clubFilter">
-          <option value="">Tous les clubs</option>
-          <option value="Nancy Kempo">Nancy Kempo</option>
-          <option value="Châtenois Martial">Châtenois Martial</option>
-          <option value="Metz Warriors">Metz Warriors</option>
-          <option value="Épinal Combat">Épinal Combat</option>
-        </select> */}
-      </div>
-
-      {/* Date Filter */}
+    
       <div className={styles.filterItem}>
         <label htmlFor="dateFilter">
           <span>📅</span> Filtrer par date :
