@@ -1,7 +1,8 @@
 import type { OpenAPIHono } from "@hono/zod-openapi";
 import { buildTournamentsRouter } from "../tournaments/adapter-rest/tournaments.router.ts";
+import { EntityManager } from '@mikro-orm/core';
 
-export const registerAppRoutes = (baseApp: OpenAPIHono) => {
+export const registerAppRoutes = (baseApp: OpenAPIHono,em : EntityManager) => {
     let app = baseApp.route('/tournaments', buildTournamentsRouter())
 
     app.doc('/docs', {
