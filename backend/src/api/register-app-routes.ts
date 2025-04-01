@@ -1,8 +1,9 @@
 import type { OpenAPIHono } from "@hono/zod-openapi";
 import { buildTournamentsRouter } from "../tournaments/adapter-rest/tournaments.router.ts";
-import { EntityManager } from '@mikro-orm/core';
+import type { AppEnv } from "./get-app.ts";
+import { apiReference } from "@scalar/hono-api-reference";
 
-export const registerAppRoutes = (baseApp: OpenAPIHono,em : EntityManager) => {
+export const registerAppRoutes = (baseApp: OpenAPIHono<AppEnv>) => {
     let app = baseApp.route('/tournaments', buildTournamentsRouter())
 
     app.doc('/docs', {
@@ -12,6 +13,15 @@ export const registerAppRoutes = (baseApp: OpenAPIHono,em : EntityManager) => {
             title: 'Kenpo API Documentation',
         },
     })
+    
+    app.get(
+        '/doc',
+        apiReference({
+          url: '/docs',
+        }),
+      )
+
+
 
     return app
 }

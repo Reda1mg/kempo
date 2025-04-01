@@ -3,11 +3,11 @@
     "target": "ESNext",
     "module": "NodeNext",
     "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
-    "experimentalDecorators": true, // Important pour MikroORM
-    "emitDecoratorMetadata": true, // Important pour MikroORM
     "noEmit": true,
     "types": [
       "node"

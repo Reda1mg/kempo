@@ -3,18 +3,47 @@
   "tables": [
     {
       "columns": {
-        "_id": {
-          "name": "_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
           "nullable": false,
-          "length": null,
-          "mappedType": "integer"
+          "length": 36,
+          "mappedType": "string"
         },
         "name": {
           "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "rank": {
+          "name": "rank",
+          "type": "enum('Ceinture Blanche','Ceinture Jaune','Ceinture Orange','Ceinture Violette','Ceinture Bleue','Ceinture Verte','Ceinture Marron','Ceinture Noire')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "Ceinture Blanche",
+            "Ceinture Jaune",
+            "Ceinture Orange",
+            "Ceinture Violette",
+            "Ceinture Bleue",
+            "Ceinture Verte",
+            "Ceinture Marron",
+            "Ceinture Noire"
+          ],
+          "mappedType": "enum"
+        },
+        "city": {
+          "name": "city",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -29,7 +58,7 @@
         {
           "keyName": "PRIMARY",
           "columnNames": [
-            "_id"
+            "id"
           ],
           "composite": false,
           "constraint": true,
