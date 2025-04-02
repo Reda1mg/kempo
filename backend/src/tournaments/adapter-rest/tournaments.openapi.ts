@@ -42,7 +42,9 @@ export const TournamentsRoutes = {
         body: z.object({ 
             name: z.string(),
             rank: z.nativeEnum(EnumRank),
-            city: z.string()
+            city: z.string(),
+            start_date: z.date(),
+            end_date: z.date()
 
          }),
         headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -68,7 +70,9 @@ export const TournamentsRoutes = {
         body: z.object({ 
             name: z.string(),
             rank: z.nativeEnum(EnumRank),
-            city: z.string()
+            city: z.string(),
+            start_date: z.date(),
+            end_date: z.date()
 
          }),
           headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -103,6 +107,7 @@ export const TournamentsRoutes = {
         path: '',
         summary: 'Get all tournaments',
         description: 'Get all tournaments',
+        query: TournamentSchema,
         responses: {
             200: {
                 description: 'Details of the tournament',
@@ -114,4 +119,37 @@ export const TournamentsRoutes = {
             },
         }
     }),
+
+    delete: createRoute({
+        method: 'delete',
+        path: '/{id}',
+        summary: 'Delete one tournament',
+        description: 'Delete one tournament by ID',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            202: {
+                description: 'Tournament deleted',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            }
+
+        }
+    }),
+
+
 }

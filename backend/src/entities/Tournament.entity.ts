@@ -19,6 +19,8 @@ export class Tournament{
   name!: string ;
   rank?: EnumRank ;
   city?: string ;
+  start_date!: Date ;
+  end_date?: Date;
 }
 
 export const TournamentSchema = new EntitySchema({
@@ -27,7 +29,9 @@ export const TournamentSchema = new EntitySchema({
     id: { type: 'uuid', onCreate: () => v4(), primary: true },
     name: { type: String },
     rank: { enum: true, items: () => Object.values(EnumRank) },
-    city : { type : String }
+    city : { type : String },
+    start_date : { type : Date },
+    end_date : {type : Date}
   },
 });
 
