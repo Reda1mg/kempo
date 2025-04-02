@@ -6,7 +6,7 @@ const NavBar = () => {
     return (
         <div className={style.sidebar}>
             <div className={style["user-info"]}>
-                <img src="/logo.png" alt="Tournament Logo" className={style.logo} />
+                <img src="logo.png" alt="Tournament Logo" className={style.logo} />
             </div>
 
             <ul className={style.menu}>
