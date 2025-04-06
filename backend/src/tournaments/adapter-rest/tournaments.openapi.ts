@@ -39,14 +39,23 @@ export const TournamentsRoutes = {
         path: '',
         summary: 'Create one tournament',
         description: 'Create one tournament',
-        body: z.object({ 
-            name: z.string(),
-            rank: z.nativeEnum(EnumRank),
-            city: z.string(),
-            start_date: z.date(),
-            end_date: z.date()
-
-         }),
+        request :{
+            body :{
+                content :{
+                    "application/json" : {
+                        schema : z.object({ 
+                            name: z.string(),
+                            rank: z.nativeEnum(EnumRank).optional(),
+                            city: z.string().optional(),
+                            start_date: z.coerce.date(),
+                            end_date: z.coerce.date().optional(),
+                            age_group_id: z.coerce.number().optional()
+                
+                         })
+                    }
+                }
+            }
+        },
         headers: new Headers({ 'Content-Type': 'application/json' }),
         
         responses: {
@@ -67,19 +76,20 @@ export const TournamentsRoutes = {
         path: '/{id}',
         summary: 'Modify one tournament',
         description: 'Modify one tournament',
-        body: z.object({ 
-            name: z.string(),
-            rank: z.nativeEnum(EnumRank),
-            city: z.string(),
-            start_date: z.date(),
-            end_date: z.date()
-
-         }),
+        
           headers: new Headers({ 'Content-Type': 'application/json' }),
           request: {
             params: z.object({
-                id: z.string().uuid()
-            })
+                id: z.string().uuid(),
+                
+            }),
+            body:{
+                content: {
+                    "application/json": {
+                        schema : TournamentSchema
+                    }
+                }
+            }
         },
         responses: {
         201: {
@@ -107,7 +117,9 @@ export const TournamentsRoutes = {
         path: '',
         summary: 'Get all tournaments',
         description: 'Get all tournaments',
-        query: TournamentSchema,
+        request : {
+            query : TournamentSchema
+        },
         responses: {
             200: {
                 description: 'Details of the tournament',
