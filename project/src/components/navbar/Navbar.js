@@ -14,6 +14,9 @@ const NavBar = () => {
                 <li>📅 Tous les Tournois</li>
                 <li>📊 Score Board</li>
                 <Link to="/competiteurs"><li>👥 Compétiteurs</li></Link>
+                <Link to="/telecommande"><li>🎚️ Telecommande</li></Link>
+                <Link to="/scoreboard"><li>📺 Scoarboard</li></Link>
+
             </ul>
         </div>
     );

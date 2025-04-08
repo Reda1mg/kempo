@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styles from "./TournoiTable.module.css"; 
-import Filter from './Filters';
+import styles from "./TournoiTable.module.css";
+import Filter from "./Filters";
 
 const TournoiTable = () => {
   const [searchQueryName, setSearchQueryName] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [tournois, setTournois] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const tournois = [
-    { id: 1, name: "Tournoi Régional", date: "2024-04-15", category: "Hommes", organizer: "Nancy Kempo" },
-    { id: 2, name: "Championnat National", date: "2024-05-22", category: "Femmes", organizer: "Châtenois Martial" },
-    { id: 3, name: "Open International", date: "2024-06-05", category: "Hommes", organizer: "Metz Warriors" },
-    { id: 4, name: "Coupe d’été", date: "2024-07-20", category: "Femmes", organizer: "Épinal Combat" },
-  ];
+  useEffect(() => {
+    fetch("http://localhost:3000/tournaments")
+      .then((res) => res.json())
+      .then((data) => {
+        setTournois(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Erreur lors du chargement des tournois:", err);
+        setLoading(false);
+      });
+  }, []);
 
-  // **Apply Filters**
-  const filteredTournois = tournois.filter((tournoi) => 
+  const filteredTournois = tournois.filter((tournoi) =>
     tournoi.name.toLowerCase().includes(searchQueryName.toLowerCase()) &&
-    (selectedDate === "" || tournoi.date === selectedDate) &&
-    (selectedCategory === "" || tournoi.category === selectedCategory)
+    (selectedDate === "" || tournoi.start_date === selectedDate) &&
+    (selectedCategory === "" || tournoi.rank === selectedCategory) // Assuming `rank` is your category
   );
 
   return (
@@ -33,36 +40,40 @@ const TournoiTable = () => {
         setSelectedCategory={setSelectedCategory}
       />
 
-      <table className={styles["tournament-table"]}>
-        <thead>
-          <tr>
-            <th>🏆 Nom du Tournoi</th>
-            <th>📅 Date</th>
-            <th>📊 Catégorie</th>
-            <th>🔍 Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredTournois.length > 0 ? (
-            filteredTournois.map((comp, index) => (
-              <tr key={index}>
-                <td>{comp.name}</td>
-                <td>{comp.date}</td>
-                <td>{comp.category}</td>
-                <td>
-                  <Link to={`/tournoiDetails/${comp.id}`}>
-                    <button className={styles["details-btn"]}>Voir Détails</button>
-                  </Link>
-                </td>
-              </tr>
-            ))
-          ) : (
+      {loading ? (
+        <p>Chargement des tournois...</p>
+      ) : (
+        <table className={styles["tournament-table"]}>
+          <thead>
             <tr>
-              <td colSpan="4">Aucun tournoi trouvé.</td>
+              <th>🏆 Nom du Tournoi</th>
+              <th>📅 Date</th>
+              <th>📊 Catégorie</th>
+              <th>🔍 Actions</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredTournois.length > 0 ? (
+              filteredTournois.map((comp, index) => (
+                <tr key={index}>
+                  <td>{comp.name}</td>
+                  <td>{comp.start_date}</td>
+                  <td>{comp.rank}</td>
+                  <td>
+                    <Link to={`/tournoiDetails/${comp.id}`}>
+                      <button className={styles["details-btn"]}>Voir Détails</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">Aucun tournoi trouvé.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
