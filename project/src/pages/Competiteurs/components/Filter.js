@@ -1,10 +1,17 @@
 import React from "react";
 import styles from "./Filter.module.css";
 
-const Filter = ({ searchQuery, setSearchQuery, selectedDate, setSelectedDate, selectedGrade, setSelectedGrade }) => {  
+const Filter = ({
+  searchQuery,
+  setSearchQuery,
+  selectedDate,
+  setSelectedDate,
+  selectedGrade,
+  setSelectedGrade,
+  onOpenAddModal, // 👈 Receive the function to open modal
+}) => {
   return (
     <div className={styles.filtersContainer}>
-      {/* 🔎 Search by Name */}
       <div className={styles.filterItem}>
         <label htmlFor="search">
           <span>🔎</span> Rechercher:
@@ -14,29 +21,27 @@ const Filter = ({ searchQuery, setSearchQuery, selectedDate, setSelectedDate, se
           id="search"
           placeholder="Nom du compétiteur"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}  
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-    
-      {/* 📅 Filter by Date */}
+
       <div className={styles.filterItem}>
         <label htmlFor="dateFilter">
           <span>📅</span> Filtrer par date :
         </label>
-        <input 
-          type="date" 
+        <input
+          type="date"
           id="dateFilter"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
         />
       </div>
 
-      {/* 🏆 Filter by Grade */}
       <div className={styles.filterItem}>
         <label htmlFor="gradeFilter">
           <span>🏆</span> Filtrer par grade :
         </label>
-        <select 
+        <select
           id="gradeFilter"
           value={selectedGrade}
           onChange={(e) => setSelectedGrade(e.target.value)}
@@ -50,6 +55,13 @@ const Filter = ({ searchQuery, setSearchQuery, selectedDate, setSelectedDate, se
           <option value="Ceinture Marron">Ceinture Marron</option>
           <option value="Ceinture Noire">Ceinture Noire</option>
         </select>
+      </div>
+
+      <div className={styles.filterItem}>
+      <button className={styles.addButton} onClick={onOpenAddModal}>
+  <span>➕</span> Ajouter Compétiteur
+</button>
+
       </div>
     </div>
   );

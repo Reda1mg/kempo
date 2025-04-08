@@ -35,7 +35,29 @@ input, select {
     border-radius: 5px;
     width: 100%;
 }
-
+.addButton {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .addButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .addButton span {
+    font-size: 16px;
+  }
+  
+  
 /* Responsive Design */
 @media (max-width: 768px) {
     .filtersContainer {
