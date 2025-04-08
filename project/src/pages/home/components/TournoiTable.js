@@ -26,9 +26,31 @@ const TournoiTable = () => {
   const filteredTournois = tournois.filter((tournoi) =>
     tournoi.name.toLowerCase().includes(searchQueryName.toLowerCase()) &&
     (selectedDate === "" || tournoi.start_date === selectedDate) &&
-    (selectedCategory === "" || tournoi.rank === selectedCategory) // Assuming `rank` is your category
+    (selectedCategory === "" || tournoi.rank === selectedCategory)
   );
-
+  const handleDelete = async (id) => {
+    const confirm = window.confirm("Voulez-vous vraiment supprimer ce tournoi ?");
+    if (!confirm) return;
+  
+    try {
+      const response = await fetch(`http://localhost:3000/tournaments/${id}`, {
+        method: "DELETE",
+      });
+  
+      if (response.status === 202) {
+        console.log("✅ Tournoi supprimé !");
+        // Optional: remove from UI without full reload
+        setTournois(prev => prev.filter(t => t.id !== id));
+      } else if (response.status === 404) {
+        alert("❌ Tournoi introuvable.");
+      } else {
+        alert("❌ Une erreur est survenue.");
+      }
+    } catch (error) {
+      console.error("❌ Erreur réseau :", error);
+    }
+  };
+  
   return (
     <div className={styles["table-container"]}>
       <Filter
@@ -59,11 +81,19 @@ const TournoiTable = () => {
                   <td>{comp.name}</td>
                   <td>{comp.start_date}</td>
                   <td>{comp.rank}</td>
-                  <td>
+                  <td className={styles["action-buttons"]}>
+                    <button className={styles["edit-btn"]}>Modifier</button>
+                    <button
+                      className={styles["delete-btn"]}
+                      onClick={() => handleDelete(comp.id)}
+                    >
+                      Supprimer
+                    </button>
                     <Link to={`/tournoiDetails/${comp.id}`}>
                       <button className={styles["details-btn"]}>Voir Détails</button>
                     </Link>
                   </td>
+
                 </tr>
               ))
             ) : (
