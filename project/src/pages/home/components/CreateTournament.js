@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./CreationTournoi.module.css";
+import styles from "./CreateTournament.module.css";
 
 const CreationTournoi = () => {
   const [isOpen, setIsOpen] = useState(false);

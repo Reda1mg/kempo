@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./AjouterCompetiteurs.module.css";
+import styles from "./AddCompetitors.module.css";
 
 const AddCompetitorModal = ({ isOpen, onClose, onAdd }) => {
   const [form, setForm] = useState({

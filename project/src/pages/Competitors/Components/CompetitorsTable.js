@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styles from "./CompetiteursTables.module.css";
+import styles from "./CompetitorsTable.module.css";
 import Filter from "./Filter";
-import AjouterCompetiteurs from "./AjouterCompetiteurs"; // Make sure this component exists and is styled
+import AjouterCompetiteurs from "./AddCompetitors"; // Make sure this component exists and is styled
 
 const CompetitorTable = () => {
   const [searchQuery, setSearchQuery] = useState("");

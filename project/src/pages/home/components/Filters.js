@@ -1,5 +1,5 @@
 import styles from "./Filters.module.css";
-import CreationTournoi from './CreationTournoi';
+import CreationTournoi from './CreateTournament';
 
 const Filters = ({
   searchQuery,

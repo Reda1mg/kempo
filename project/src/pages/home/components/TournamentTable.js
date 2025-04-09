@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styles from "./TournoiTable.module.css";
+import styles from "./TournamentTable.module.css";
 import Filter from "./Filters";
-import EditTournoiModal from "./EditTournoiModal";
+import EditTournoiModal from "./EditTournamentModal";
 
 const TournoiTable = () => {
   const [searchQueryName, setSearchQueryName] = useState("");
