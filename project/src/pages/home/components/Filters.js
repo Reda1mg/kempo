@@ -1,7 +1,14 @@
 import styles from "./Filters.module.css";
 import CreationTournoi from './CreationTournoi';
 
-const Filters = ({ searchQuery, setSearchQuery, selectedDate, setSelectedDate, selectedCategory, setSelectedCategory }) => {
+const Filters = ({
+  searchQuery,
+  setSearchQuery,
+  selectedDate,
+  setSelectedDate,
+  selectedCategory,
+  setSelectedCategory
+}) => {
   return (
     <div className={styles.filtersContainer}>
       {/* 🔎 Search by Name */}
@@ -27,7 +34,7 @@ const Filters = ({ searchQuery, setSearchQuery, selectedDate, setSelectedDate, s
         />
       </div>
 
-      {/* 📊 Filter by Category */}
+      {/* 📊 Filter by Rank (Catégorie) */}
       <div className={styles.filterItem}>
         <label htmlFor="categoryFilter"><span>📊</span> Filtrer par catégorie :</label>
         <select 
@@ -36,14 +43,21 @@ const Filters = ({ searchQuery, setSearchQuery, selectedDate, setSelectedDate, s
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
           <option value="">Toutes les catégories</option>
-          <option value="Hommes">Hommes</option>
-          <option value="Femmes">Femmes</option>
+          <option value="Ceinture Blanche">Ceinture Blanche</option>
+          <option value="Ceinture Jaune">Ceinture Jaune</option>
+          <option value="Ceinture Orange">Ceinture Orange</option>
+          <option value="Ceinture Verte">Ceinture Verte</option>
+          <option value="Ceinture Bleue">Ceinture Bleue</option>
+          <option value="Ceinture Marron">Ceinture Marron</option>
+          <option value="Ceinture Noire 1er Dan">Ceinture Noire 1er Dan</option>
+          <option value="Ceinture Noire 2ème Dan">Ceinture Noire 2ème Dan</option>
+          <option value="Ceinture Noire 3ème Dan">Ceinture Noire 3ème Dan</option>
         </select>
-      </div> 
+      </div>
 
       {/* ➕ Create Tournament Button */}
       <div className={styles.createBtn}>
-        <CreationTournoi/>
+        <CreationTournoi />
       </div>
     </div>
   );

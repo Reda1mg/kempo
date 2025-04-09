@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./TournoiTable.module.css";
 import Filter from "./Filters";
-import EditTournoiModal from "../../TournoiDetails/Components/EditTournoiModal";
+import EditTournoiModal from "./EditTournoiModal";
 
 const TournoiTable = () => {
   const [searchQueryName, setSearchQueryName] = useState("");
@@ -33,7 +33,7 @@ const TournoiTable = () => {
 
   const filteredTournois = tournois.filter((tournoi) =>
     tournoi.name.toLowerCase().includes(searchQueryName.toLowerCase()) &&
-    (selectedDate === "" || tournoi.start_date === selectedDate) &&
+    (selectedDate === "" || tournoi.start_date?.startsWith(selectedDate)) &&
     (selectedCategory === "" || tournoi.rank === selectedCategory)
   );
 
@@ -87,7 +87,7 @@ const TournoiTable = () => {
               filteredTournois.map((comp, index) => (
                 <tr key={index}>
                   <td>{comp.name}</td>
-                  <td>{comp.start_date}</td>
+                  <td>{comp.start_date?.split("T")[0]}</td> {/* ✅ Only date */}
                   <td>{comp.rank}</td>
                   <td className={styles["action-buttons"]}>
                     <button
