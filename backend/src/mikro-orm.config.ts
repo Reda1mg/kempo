@@ -3,6 +3,7 @@ import { MikroORM } from '@mikro-orm/core';
 import { defineConfig, MySqlDriver } from '@mikro-orm/mysql';
 import { Tournament } from './entities/Tournament.entity.ts';
 import { Migrator } from '@mikro-orm/migrations';
+import { SeedManager } from '@mikro-orm/seeder';
 
 // export default {
 //   dbName: 'kempo_db',
@@ -27,5 +28,5 @@ export default defineConfig({
   entitiesTs: ['./src/entities/*.ts'],
   driver: MySqlDriver,
   allowGlobalContext: true,
-  extensions: [ Migrator],
+  extensions: [Migrator,SeedManager],
 }) 

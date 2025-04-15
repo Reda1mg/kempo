@@ -5,6 +5,66 @@
       "columns": {
         "id": {
           "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "age_min": {
+          "name": "age_min",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "age_max": {
+          "name": "age_max",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        }
+      },
+      "name": "age_group",
+      "indexes": [
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
           "type": "varchar(36)",
           "unsigned": false,
           "autoincrement": false,
@@ -25,20 +85,29 @@
         },
         "rank": {
           "name": "rank",
-          "type": "enum('Ceinture Blanche','Ceinture Jaune','Ceinture Orange','Ceinture Violette','Ceinture Bleue','Ceinture Verte','Ceinture Marron','Ceinture Noire')",
+          "type": "enum('Ceinture Blanche','Ceinture Blanche-Jaune','Ceinture Jaune','Ceinture Jaune-Orange','Ceinture Orange','Ceinture Orange-Verte','Ceinture Verte','Ceinture Verte-Bleue','Ceinture Bleue','Ceinture Bleue-Marron','Ceinture Marron','Ceinture Noire 1ère dan','Ceinture Noire 2ème dan','Ceinture Noire 3ème dan','Ceinture Noire 4ème dan','Ceinture Noire 5ème dan','Ceinture Noire 6ème dan')",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "enumItems": [
             "Ceinture Blanche",
+            "Ceinture Blanche-Jaune",
             "Ceinture Jaune",
+            "Ceinture Jaune-Orange",
             "Ceinture Orange",
-            "Ceinture Violette",
-            "Ceinture Bleue",
+            "Ceinture Orange-Verte",
             "Ceinture Verte",
+            "Ceinture Verte-Bleue",
+            "Ceinture Bleue",
+            "Ceinture Bleue-Marron",
             "Ceinture Marron",
-            "Ceinture Noire"
+            "Ceinture Noire 1ère dan",
+            "Ceinture Noire 2ème dan",
+            "Ceinture Noire 3ème dan",
+            "Ceinture Noire 4ème dan",
+            "Ceinture Noire 5ème dan",
+            "Ceinture Noire 6ème dan"
           ],
           "mappedType": "enum"
         },
@@ -71,10 +140,30 @@
           "nullable": false,
           "length": null,
           "mappedType": "datetime"
+        },
+        "age_group_id": {
+          "name": "age_group_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": null,
+          "mappedType": "integer"
         }
       },
       "name": "tournament",
       "indexes": [
+        {
+          "columnNames": [
+            "age_group_id"
+          ],
+          "composite": false,
+          "keyName": "tournament_age_group_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "PRIMARY",
           "columnNames": [
@@ -87,7 +176,127 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {},
+      "foreignKeys": {
+        "tournament_age_group_id_foreign": {
+          "constraintName": "tournament_age_group_id_foreign",
+          "columnNames": [
+            "age_group_id"
+          ],
+          "localTableName": "tournament",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "age_group",
+          "deleteRule": "set null",
+          "updateRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "weight_min": {
+          "name": "weight_min",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "weight_max": {
+          "name": "weight_max",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "age_group_id": {
+          "name": "age_group_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "sexe": {
+          "name": "sexe",
+          "type": "enum('H','F')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "H",
+            "F"
+          ],
+          "mappedType": "enum"
+        }
+      },
+      "name": "weight_category",
+      "indexes": [
+        {
+          "columnNames": [
+            "age_group_id"
+          ],
+          "composite": false,
+          "keyName": "weight_category_age_group_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "weight_category_age_group_id_foreign": {
+          "constraintName": "weight_category_age_group_id_foreign",
+          "columnNames": [
+            "age_group_id"
+          ],
+          "localTableName": "weight_category",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "age_group",
+          "updateRule": "cascade"
+        }
+      },
       "nativeEnums": {}
     }
   ],
