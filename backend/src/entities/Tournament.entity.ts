@@ -1,4 +1,3 @@
-// src/entities/Tournament.ts
 import { EntitySchema} from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { AgeGroup } from './AgeGroup.entity.ts';
@@ -31,7 +30,8 @@ export class Tournament{
   city?: string ;
   start_date!: Date ;
   end_date?: Date;
-  age_group?: AgeGroup
+  age_group?: AgeGroup;
+  
 }
 
 export const TournamentSchema = new EntitySchema({

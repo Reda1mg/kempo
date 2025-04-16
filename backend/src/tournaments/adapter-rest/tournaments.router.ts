@@ -28,7 +28,6 @@ export function buildTournamentsRouter() {
     })
     .openapi(TournamentsRoutes.post, async (ctx) => {
         const body = ctx.req.valid("json")
-        //const {age_group_id : age_group,...rest} = body
 
         const em = ctx.get("em");
         const result =  em.create(Tournament,{
