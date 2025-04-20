@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { EnumRank } from "../../entities/Tournament.entity.ts";
-import { AgeGroup } from "../../entities/AgeGroup.entity.ts";
-import { EnumSexe } from "../../entities/WeightCategory.ts";
+import { EnumRank } from "../../entities/tournament.entity.ts";
+import { AgeGroup } from "../../entities/age-group.entity.ts";
+import { EnumGender } from "../../entities/weight-category.ts";
 
 
 export const CompetitorSchema = z.object({
@@ -13,12 +13,13 @@ export const CompetitorSchema = z.object({
     country: z.string(),
     weight: z.coerce.number().optional(),
     rank: z.nativeEnum(EnumRank),
-    sexe: z.nativeEnum(EnumSexe),
+    gender: z.nativeEnum(EnumGender),
 })
 
 export const CompetitorSchemaCreate = CompetitorSchema.omit({id : true})
 
-export const CompetitorSchemaUpdate = CompetitorSchema.omit({id : true}).optional()
+export const CompetitorSchemaUpdate = CompetitorSchema.omit({id : true}).partial()
+
 
 export type Competitor = z.infer<typeof CompetitorSchema>
 export type CompetitorCreate = z.infer<typeof CompetitorSchemaCreate>

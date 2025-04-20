@@ -1,7 +1,7 @@
 
 import { getApp } from "../../api/get-app.ts";
-import { AgeGroup } from "../../entities/AgeGroup.entity.ts";
-import { Tournament } from "../../entities/Tournament.entity.ts";
+import { AgeGroup } from "../../entities/age-group.entity.ts";
+import { Tournament } from "../../entities/tournament.entity.ts";
 import { TournamentsRoutes } from "./tournaments.openapi.ts";
 
 

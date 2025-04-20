@@ -1,7 +1,7 @@
 import { json } from "stream/consumers";
 import { getApp } from "../../api/get-app.ts";
 import { RanksRoutes } from "./ranks.openapi.ts";
-import { EnumRank } from "../../entities/Tournament.entity.ts";
+import { EnumRank } from "../../entities/tournament.entity.ts";
 
 export function buildRanksRouter() {
     const router = getApp()

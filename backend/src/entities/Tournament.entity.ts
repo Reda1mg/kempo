@@ -1,6 +1,6 @@
 import { EntitySchema} from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import { AgeGroup } from './AgeGroup.entity.ts';
+import { AgeGroup } from './age-group.entity.ts';
 
 export enum EnumRank{
   WHITE = 'Ceinture Blanche',

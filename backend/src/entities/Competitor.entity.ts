@@ -1,8 +1,8 @@
 import { EntitySchema} from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import { AgeGroup } from './AgeGroup.entity.ts';
-import { EnumRank } from './Tournament.entity.ts';
-import { EnumSexe } from './WeightCategory.ts';
+import { AgeGroup } from './age-group.entity.ts';
+import { EnumRank } from './tournament.entity.ts';
+import { EnumGender } from './weight-category.ts';
 
 
 export class Competitor{
@@ -14,7 +14,7 @@ export class Competitor{
     country!: string;
     weight?: number;
     rank!: EnumRank ;
-    sexe!: EnumSexe ;
+    gender!: EnumGender ;
 }
 
 export const CompetitorSchema = new EntitySchema({
@@ -28,6 +28,6 @@ export const CompetitorSchema = new EntitySchema({
         country: {type: String},
         weight: {type: Number},
         rank: { enum: true, items: () => Object.values(EnumRank) },
-        sexe: { enum: true, items: () => Object.values(EnumSexe)}
+        gender: { enum: true, items: () => Object.values(EnumGender)}
     }
 })

@@ -1,6 +1,6 @@
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { AgeGroup } from '../entities/AgeGroup.entity.ts';
+import { AgeGroup } from '../entities/age-group.entity.ts';
 
 export class DatabaseSeeder extends Seeder {
 

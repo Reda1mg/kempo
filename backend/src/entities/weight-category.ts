@@ -1,7 +1,7 @@
 import { EntitySchema } from "@mikro-orm/core";
-import { AgeGroup } from "./AgeGroup.entity.ts";
+import { AgeGroup } from "./age-group.entity.ts";
 
-export enum EnumSexe{
+export enum EnumGender{
     MAN = 'H',
     WOMAN = 'F'
 }
@@ -14,7 +14,7 @@ export class WeightCategory{
     weight_min!: number;
     weight_max!: number;
     age_group!: AgeGroup;
-    sexe!: EnumSexe
+    gender!: EnumGender
 }
 
 
@@ -26,6 +26,6 @@ export const WeightCategorySchema = new EntitySchema({
         weight_min: {type: Number},
         weight_max: {type: Number},
         age_group: {kind: 'm:1',entity: ()=> AgeGroup},
-        sexe: { enum: true, items: () => Object.values(EnumSexe)}
+        gender: { enum: true, items: () => Object.values(EnumGender)}
     }
 })

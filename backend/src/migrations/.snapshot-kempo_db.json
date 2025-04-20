@@ -161,8 +161,8 @@
           ],
           "mappedType": "enum"
         },
-        "sexe": {
-          "name": "sexe",
+        "gender": {
+          "name": "gender",
           "type": "enum('H','F')",
           "unsigned": false,
           "autoincrement": false,
@@ -376,8 +376,8 @@
           "length": null,
           "mappedType": "integer"
         },
-        "sexe": {
-          "name": "sexe",
+        "gender": {
+          "name": "gender",
           "type": "enum('H','F')",
           "unsigned": false,
           "autoincrement": false,

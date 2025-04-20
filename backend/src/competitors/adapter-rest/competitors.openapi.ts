@@ -82,7 +82,7 @@ export const CompetitorsRoutes = {
             },
             responses: {
             201: {
-                description: 'Tournament modified',
+                description: 'Competitor modified',
                 content: {
                     "text/plain": {
                         schema: z.string()
@@ -90,7 +90,7 @@ export const CompetitorsRoutes = {
                 }
             },
             404: {
-                description: 'Tournament not found',
+                description: 'Competitor not found',
                 content: {
                     "text/plain": {
                         schema: z.string()

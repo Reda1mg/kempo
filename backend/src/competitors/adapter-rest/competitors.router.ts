@@ -1,5 +1,5 @@
 import { getApp } from "../../api/get-app.ts";
-import { Competitor } from "../../entities/Competitor.entity.ts";
+import { Competitor } from "../../entities/competitor.entity.ts";
 import { CompetitorsRoutes } from "./competitors.openapi.ts";
 
 export function buildCompetitorsRouter(){
@@ -23,7 +23,7 @@ export function buildCompetitorsRouter(){
                     country: result.country,
                     weight: result.weight,
                     rank: result.rank,
-                    sexe: result.sexe
+                    gender: result.gender
         
                 }, 200)
 
@@ -39,5 +39,29 @@ export function buildCompetitorsRouter(){
     
             return ctx.text("Competitor created", 201);
         })
+    .openapi(CompetitorsRoutes.put, async (ctx) => {
+            const { id } = ctx.req.valid('param')
+            const body = ctx.req.valid('json');
     
+            const em = ctx.get("em");
+            const result = await em.findOne(Competitor, { id })
+            if (result == null) {
+                return ctx.text("Not found", 404);
+            }
+    
+            result.firstname = body.firstname ?? result.firstname
+            result.lastname = body.lastname ?? result.lastname
+            result.birthday = body.birthday ?? result.birthday
+            result.club = body.club ?? result.club
+            result.country = body.country ?? result.country
+            result.weight = body.weight ?? result.weight
+            result.rank = body.rank ??  result.rank
+            result.gender = body.gender ?? result.gender
+    
+            
+    
+            await em.flush();
+    
+            return ctx.text("Tournament updated", 201);
+        })
 }
