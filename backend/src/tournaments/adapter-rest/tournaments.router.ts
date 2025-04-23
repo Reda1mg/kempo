@@ -1,7 +1,8 @@
 
 import { getApp } from "../../api/get-app.ts";
-import { AgeGroup } from "../../entities/AgeGroup.entity.ts";
-import { Tournament } from "../../entities/Tournament.entity.ts";
+import { AgeGroup } from "../../entities/age-group.entity.ts";
+import { Competitor } from "../../entities/competitor.entity.ts";
+import { Tournament } from "../../entities/tournament.entity.ts";
 import { TournamentsRoutes } from "./tournaments.openapi.ts";
 
 
@@ -28,7 +29,6 @@ export function buildTournamentsRouter() {
     })
     .openapi(TournamentsRoutes.post, async (ctx) => {
         const body = ctx.req.valid("json")
-        //const {age_group_id : age_group,...rest} = body
 
         const em = ctx.get("em");
         const result =  em.create(Tournament,{
@@ -91,6 +91,71 @@ export function buildTournamentsRouter() {
 
         return ctx.text("Tournament Deleted", 202)
     })
+    .openapi(TournamentsRoutes.addCompetitor, async (ctx) => {
+        const { id } = ctx.req.valid('param')
+        const body = ctx.req.valid('json')
 
+        const em = ctx.get("em");
+        const tournament = await em.findOne(Tournament, { id })
+        if (tournament == null) {
+            return ctx.text("Not found", 404);
+        }
+
+        const competitor = await em.findOne(Competitor, { id: body.competitor_id })
+        if (competitor == null) {
+            return ctx.text("Competitor not found", 404);
+        }
+        
+
+        if (tournament.competitors.contains(competitor)) {
+            return ctx.text("Competitor already in tournament", 409);
+        }
+        
+        tournament.competitors.add(competitor)
+        
+        await em.flush()
+
+        return ctx.text("Competitor added to tournament", 201)
+    })
+    .openapi(TournamentsRoutes.deleteCompetitor, async (ctx) => {
+        const { id } = ctx.req.valid('param')
+        const body = ctx.req.valid('json')
+
+        const em = ctx.get("em");
+        const tournament = await em.findOne(Tournament, { id },{ populate: ['competitors'] })
+        if (tournament == null) {
+            return ctx.text("Not found", 404);
+        }
+
+        const competitor = await em.findOne(Competitor, { id: body.competitor_id })
+        if (competitor == null) {
+            return ctx.text("Competitor not found", 404);
+        }
+        
+
+        if (!tournament.competitors.contains(competitor)) {
+            return ctx.text("Competitor not in tournament", 409);
+        }
+        
+        tournament.competitors.remove(competitor)
+        
+        await em.flush()
+
+        return ctx.text("Competitor removed from tournament", 202)
+    })
+    .openapi(TournamentsRoutes.getCompetitors, async (ctx) => {
+        const { id } = ctx.req.valid('param')
+        const em = ctx.get("em");
+        const tournament = await em.findOne(Tournament, { id },{ populate: ['competitors'] })
+        if (tournament == null) {
+            return ctx.text("Not found", 404);
+        }
+
+        return ctx.json(
+            tournament.competitors
+        , 200)
+    })
+        
+        
 }
 

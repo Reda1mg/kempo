@@ -73,6 +73,137 @@
           "length": 36,
           "mappedType": "string"
         },
+        "firstname": {
+          "name": "firstname",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "lastname": {
+          "name": "lastname",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "birthday": {
+          "name": "birthday",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "datetime"
+        },
+        "club": {
+          "name": "club",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "weight": {
+          "name": "weight",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "rank": {
+          "name": "rank",
+          "type": "enum('Ceinture Blanche','Ceinture Blanche-Jaune','Ceinture Jaune','Ceinture Jaune-Orange','Ceinture Orange','Ceinture Orange-Verte','Ceinture Verte','Ceinture Verte-Bleue','Ceinture Bleue','Ceinture Bleue-Marron','Ceinture Marron','Ceinture Noire 1ère dan','Ceinture Noire 2ème dan','Ceinture Noire 3ème dan','Ceinture Noire 4ème dan','Ceinture Noire 5ème dan','Ceinture Noire 6ème dan')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "Ceinture Blanche",
+            "Ceinture Blanche-Jaune",
+            "Ceinture Jaune",
+            "Ceinture Jaune-Orange",
+            "Ceinture Orange",
+            "Ceinture Orange-Verte",
+            "Ceinture Verte",
+            "Ceinture Verte-Bleue",
+            "Ceinture Bleue",
+            "Ceinture Bleue-Marron",
+            "Ceinture Marron",
+            "Ceinture Noire 1ère dan",
+            "Ceinture Noire 2ème dan",
+            "Ceinture Noire 3ème dan",
+            "Ceinture Noire 4ème dan",
+            "Ceinture Noire 5ème dan",
+            "Ceinture Noire 6ème dan"
+          ],
+          "mappedType": "enum"
+        },
+        "gender": {
+          "name": "gender",
+          "type": "enum('H','F')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "H",
+            "F"
+          ],
+          "mappedType": "enum"
+        }
+      },
+      "name": "competitor",
+      "indexes": [
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 36,
+          "mappedType": "string"
+        },
         "name": {
           "name": "name",
           "type": "varchar(255)",
@@ -195,6 +326,94 @@
     },
     {
       "columns": {
+        "tournament_id": {
+          "name": "tournament_id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 36,
+          "mappedType": "string"
+        },
+        "competitor_id": {
+          "name": "competitor_id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 36,
+          "mappedType": "string"
+        }
+      },
+      "name": "tournament_competitors",
+      "indexes": [
+        {
+          "columnNames": [
+            "tournament_id"
+          ],
+          "composite": false,
+          "keyName": "tournament_competitors_tournament_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "competitor_id"
+          ],
+          "composite": false,
+          "keyName": "tournament_competitors_competitor_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "tournament_id",
+            "competitor_id"
+          ],
+          "composite": true,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "tournament_competitors_tournament_id_foreign": {
+          "constraintName": "tournament_competitors_tournament_id_foreign",
+          "columnNames": [
+            "tournament_id"
+          ],
+          "localTableName": "tournament_competitors",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "tournament",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        },
+        "tournament_competitors_competitor_id_foreign": {
+          "constraintName": "tournament_competitors_competitor_id_foreign",
+          "columnNames": [
+            "competitor_id"
+          ],
+          "localTableName": "tournament_competitors",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "competitor",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
         "id": {
           "name": "id",
           "type": "int",
@@ -245,8 +464,8 @@
           "length": null,
           "mappedType": "integer"
         },
-        "sexe": {
-          "name": "sexe",
+        "gender": {
+          "name": "gender",
           "type": "enum('H','F')",
           "unsigned": false,
           "autoincrement": false,

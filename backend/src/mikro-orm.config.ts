@@ -1,7 +1,7 @@
 // mikro-orm.config.ts
 import { MikroORM } from '@mikro-orm/core';
 import { defineConfig, MySqlDriver } from '@mikro-orm/mysql';
-import { Tournament } from './entities/Tournament.entity.ts';
+import { Tournament } from './entities/tournament.entity.ts';
 import { Migrator } from '@mikro-orm/migrations';
 import { SeedManager } from '@mikro-orm/seeder';
 
@@ -21,7 +21,7 @@ import { SeedManager } from '@mikro-orm/seeder';
 export default defineConfig({
   dbName: 'kempo_db',
   user: 'root',
-  password: '',
+  password: 'secure-password',
   host: 'localhost',
   port: 3306, // Port MySQL par défaut
   entities: [Tournament],

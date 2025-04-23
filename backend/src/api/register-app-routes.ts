@@ -3,13 +3,15 @@ import { buildTournamentsRouter } from "../tournaments/adapter-rest/tournaments.
 import type { AppEnv } from "./get-app.ts";
 import { apiReference } from "@scalar/hono-api-reference";
 import { buildRanksRouter } from "../rank/adapter-rest/ranks.router.ts";
+import { buildCompetitorsRouter } from "../competitors/adapter-rest/competitors.router.ts";
 
 export const registerAppRoutes = (baseApp: OpenAPIHono<AppEnv>) => {
     let app = baseApp.route('/tournaments', buildTournamentsRouter())
     app = baseApp.route('/ranks',buildRanksRouter())
+    app = baseApp.route('/competitors',buildCompetitorsRouter())
 
 
-    app.doc('/docs', {
+    app.doc('/doc', {
         openapi: '3.0.0',
         info: {
             version: '1.0.0',
@@ -18,9 +20,9 @@ export const registerAppRoutes = (baseApp: OpenAPIHono<AppEnv>) => {
     })
     
     app.get(
-        '/doc',
+        '/docs',
         apiReference({
-          url: '/docs',
+          url: '/doc',
         }),
       )
 

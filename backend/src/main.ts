@@ -4,7 +4,7 @@ import { getApp } from './api/get-app.ts'
 import { EntityManager } from '@mikro-orm/core';
 import { MikroORM } from '@mikro-orm/core';
 import config from './mikro-orm.config.ts';
-import { Tournament } from './entities/Tournament.entity.ts';
+import { Tournament } from './entities/tournament.entity.ts';
 import { contextStorage } from 'hono/context-storage';
 import { cors } from 'hono/cors';
 
@@ -38,5 +38,5 @@ serve({
   port: 3000
 }, (info) => {
   console.log(`Server is running on http://localhost:${info.port}`)
-  console.log(`API documentation is available on http://localhost:${info.port}/doc`)
+  console.log(`API documentation is available on http://localhost:${info.port}/docs`)
 })
