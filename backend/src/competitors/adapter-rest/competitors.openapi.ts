@@ -99,5 +99,37 @@ export const CompetitorsRoutes = {
             }
     
         }
+        }),
+
+        delete: createRoute({
+            method: 'delete',
+            path: '/{id}',
+            summary: 'Delete one competitor',
+            description: 'Delete one competitor by ID',
+            request: {
+                params: z.object({
+                    id: z.string().uuid()
+                })
+            },
+            responses: {
+                202: {
+                    description: 'Competitor deleted',
+                    content: {
+                        "text/plain": {
+                            schema: z.string()
+                        }
+                    }
+                },
+                404: {
+                    description: 'Competitor not found',
+                    content: {
+                        "text/plain": {
+                            schema: z.string()
+                        }
+                    }
+                }
+    
+            }
         })
+
 }

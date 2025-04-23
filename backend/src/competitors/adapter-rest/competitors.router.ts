@@ -64,4 +64,17 @@ export function buildCompetitorsRouter(){
     
             return ctx.text("Tournament updated", 201);
         })
+    .openapi(CompetitorsRoutes.delete, async (ctx) => {
+            const { id } = ctx.req.valid('param')
+            const em = ctx.get("em")
+            const result = await em.findOne(Competitor, { id })
+            
+            
+            if (result == null) {
+                return ctx.text("Not found", 404);
+            }
+            em.nativeDelete(Competitor,{id})
+    
+            return ctx.text("Competitor Deleted", 202)
+        })
 }

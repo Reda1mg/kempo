@@ -1,6 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { TournamentSchema } from "./tournaments.schema.ts";
 import { EnumRank } from "../../entities/tournament.entity.ts";
+import { CompetitorSchema } from "../../competitors/adapter-rest/competitors.schema.ts";
 
 export const TournamentsRoutes = {
     get: createRoute({
@@ -162,6 +163,127 @@ export const TournamentsRoutes = {
 
         }
     }),
+    addCompetitor: createRoute({
+        method: 'post',
+        path: '/add-competitor/{id}',
+        summary: 'Add one competitor ',
+        description: 'Add one competitor on the tournament by competitor ID',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            }),
+            body :{
+                content :{
+                    "application/json" : {
+                        schema : z.object({ 
+                            competitor_id: z.string().uuid()
+                         })
+                    }
+                }
+            }
+        },
+        responses: {
+            201: {
+                description: 'Competitor add',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament or Competitor not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            409: {
+                description: 'Competitor already in tournament',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            }
 
+        }
+    }),
+    deleteCompetitor: createRoute({
+        method: 'delete',
+        path: '/delete-competitor/{id}',
+        summary: 'Delete one competitor ',
+        description: 'Delete one competitor on the tournament by competitor ID',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            }),
+            body :{
+                content :{
+                    "application/json" : {
+                        schema : z.object({ 
+                            competitor_id: z.string().uuid()
+                         })
+                    }
+                }
+            }
+        },
+        responses: {
+            202: {
+                description: 'Competitor deleted',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament or Competitor not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            409: {
+                description: 'Competitor not in tournament',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            }
 
+        }
+    }),
+    getCompetitors: createRoute({
+        method: 'get',
+        path : '/competitors/{id}',
+        summary: 'Get all competitors of a tournament',
+        description: 'Get all competitors of a tournament',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            200: {
+                description: 'Details of the competitors',
+                content: {
+                    'application/json': {
+                        schema: z.array(CompetitorSchema)
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        }
+    })
 }

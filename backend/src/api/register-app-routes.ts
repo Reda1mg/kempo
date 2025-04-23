@@ -11,7 +11,7 @@ export const registerAppRoutes = (baseApp: OpenAPIHono<AppEnv>) => {
     app = baseApp.route('/competitors',buildCompetitorsRouter())
 
 
-    app.doc('/docs', {
+    app.doc('/doc', {
         openapi: '3.0.0',
         info: {
             version: '1.0.0',
@@ -20,9 +20,9 @@ export const registerAppRoutes = (baseApp: OpenAPIHono<AppEnv>) => {
     })
     
     app.get(
-        '/doc',
+        '/docs',
         apiReference({
-          url: '/docs',
+          url: '/doc',
         }),
       )
 
