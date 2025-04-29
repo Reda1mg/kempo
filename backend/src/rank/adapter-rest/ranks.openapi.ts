@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { EnumRank } from "../../entities/tournament.entity.ts";
+import { EnumRank } from "../../entities/Tournament.entity.ts";
 
 export const RanksRoutes = {
     list: createRoute({

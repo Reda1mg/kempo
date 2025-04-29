@@ -1,7 +1,7 @@
 import { EntitySchema} from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { AgeGroup } from './age-group.entity.ts';
-import { EnumRank } from './tournament.entity.ts';
+import { EnumRank } from './Tournament.entity.ts';
 import { EnumGender } from './weight-category.ts';
 
 

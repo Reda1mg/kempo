@@ -1,7 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { TournamentSchema } from "./tournaments.schema.ts";
-import { EnumRank } from "../../entities/tournament.entity.ts";
+import { CategorySchema, CategorySchemaCreate, TournamentSchema } from "./tournaments.schema.ts";
+import { EnumRank } from "../../entities/Tournament.entity.ts";
 import { CompetitorSchema } from "../../competitors/adapter-rest/competitors.schema.ts";
+import { assign } from "@mikro-orm/core";
 
 export const TournamentsRoutes = {
     get: createRoute({
@@ -259,7 +260,7 @@ export const TournamentsRoutes = {
     }),
     getCompetitors: createRoute({
         method: 'get',
-        path : '/competitors/{id}',
+        path : '/{id}/competitors',
         summary: 'Get all competitors of a tournament',
         description: 'Get all competitors of a tournament',
         request: {
@@ -285,5 +286,229 @@ export const TournamentsRoutes = {
                 }
             },
         }
-    })
+    }),
+    createCategory: createRoute({
+        method: 'post',
+        path: '/{id}/categories',
+        summary: 'Create one category',
+        description: 'Create one category',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            }),
+            body :{
+                content :{
+                    "application/json" : {
+                        schema : CategorySchemaCreate
+                    }
+                }
+            }
+        },
+        responses: {
+            201: {
+                description: 'Category created',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        }
+    }),
+    listCategories: createRoute({
+        method: 'get',
+        path: '/{id}/categories',
+        summary: 'Get all categories',
+        description: 'Get all categories of the tournament',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            200: {
+                description: 'Details of the categories',
+                content: {
+                    'application/json': {
+                        schema: z.array(CategorySchema)
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        }
+    }),
+    assignCompetitors: createRoute({
+        method: 'post',
+        path: '/{id}/assign-competitors',
+        summary: 'Assign competitors to a category',
+        description: 'Assign competitors to a category',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            }),
+        },
+        responses: {
+            200: {
+                description: 'Competitors assigned',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament or Category not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        },
+    }),
+    assignCompetitor: createRoute({
+        method: 'post',
+        path: '/{id}/assign-competitor/{competitorId}',
+        summary: 'Assign one competitor to a category',
+        description: 'Assign one competitor to a category',
+        request: {
+            params: z.object({
+                id: z.string().uuid(),
+                categoryId: z.string().uuid()
+            }),
+            body :{
+                content :{
+                    "application/json" : {
+                        schema : z.object({ 
+                            competitor_id: z.string().uuid()
+                         })
+                    }
+                }
+            }
+
+        },
+        responses: {
+            200: {
+                description: 'Competitor assigned',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament or Competitor not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        },
+    }),
+    getCategories: createRoute({
+        method: 'get',
+        path: '/{id}/categories',
+        summary: 'Get all categories',
+        description: 'Get all categories of the tournament',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            200: {
+                description: 'Details of the categories',
+                content: {
+                    'application/json': {
+                        schema: z.array(CategorySchema)
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        }
+    }),
+    deleteCategory: createRoute({
+        method: 'delete',
+        path: '/categories/{categoryId}',
+        summary: 'Delete one category',
+        description: 'Delete one category by ID',
+        request: {
+            params: z.object({
+                categoryId: z.string().uuid()
+            })
+        },
+        responses: {
+            202: {
+                description: 'Category deleted',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament or Category not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            }
+
+        }
+    }),
+    getCategoryCompetitors: createRoute({
+        method: 'get',  
+        path: '/categories/{categoryId}/competitors',
+        summary: 'Get all competitors of a category',
+        description: 'Get all competitors of a category',
+        request: {
+            params: z.object({
+                categoryId: z.string().uuid()
+            })
+        },
+        responses: {
+            200: {
+                description: 'Details of the competitors',
+                content: {
+                    'application/json': {
+                        schema: z.array(CompetitorSchema)
+                    }
+                }
+            },
+            404: {
+                description: 'Category not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        }
+    }),
+   
+
 }

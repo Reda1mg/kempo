@@ -1,7 +1,8 @@
 import { Collection, EntitySchema } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { AgeGroup } from './age-group.entity.ts';
-import { Competitor } from './competitor.entity.ts';
+import { Competitor } from './Competitor.entity.ts';
+import { Category } from './Category.entity.ts';
 
 export enum EnumRank {
   WHITE = 'Ceinture Blanche',
@@ -27,11 +28,9 @@ export enum EnumRank {
 export class Tournament {
   id!: string;
   name!: string;
-  rank?: EnumRank;
   city?: string;
   start_date!: Date;
   end_date?: Date;
-  age_group?: AgeGroup;
   competitors = new Collection<Competitor>(this);
 }
 
@@ -40,12 +39,10 @@ export const TournamentSchema = new EntitySchema({
   properties: {
     id: { type: 'uuid', onCreate: () => v4(), primary: true },
     name: { type: String },
-    rank: { enum: true, items: () => Object.values(EnumRank) },
     city: { type: String },
     start_date: { type: Date },
     end_date: { type: Date },
-    age_group: { kind: 'm:1', entity: () => AgeGroup, nullable: true },
-    competitors: { kind: 'm:n', entity: () => Competitor }
+    competitors: { kind: 'm:n', entity: () => Competitor, pivotTable: 'tournament_competitor_category' },
   },
 });
 

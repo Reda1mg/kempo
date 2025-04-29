@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { EnumRank } from "../../entities/tournament.entity.ts";
+import { EnumRank } from "../../entities/Tournament.entity.ts";
 import { AgeGroup } from "../../entities/age-group.entity.ts";
 import { EnumGender } from "../../entities/weight-category.ts";
 
