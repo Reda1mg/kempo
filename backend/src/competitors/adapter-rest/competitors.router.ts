@@ -1,5 +1,5 @@
 import { getApp } from "../../api/get-app.ts";
-import { Competitor } from "../../entities/competitor.entity.ts";
+import { Competitor } from "../../entities/Competitor.entity.ts";
 import { CompetitorsRoutes } from "./competitors.openapi.ts";
 
 export function buildCompetitorsRouter(){
