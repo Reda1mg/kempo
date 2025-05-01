@@ -1,23 +1,52 @@
-import React from "react";
-import MatchTable from "./Components/ListeMatches";
-import RankingTable from "./Components/RankingTable"; 
-
-const matchesData = [
-  { combat: "#1", name: "John", surname: "Doe", club: "Nancy", ippon: 0, kekkou: 0 },
-  { combat: "#2", name: "XXX", surname: "Doe", club: "-", ippon: 0, kekkou: 0 }
-];
-
-const rankingsData = [
-  { name: "John", surname: "Doe", ippon: 1, kekkou: 2, points: 6 },
-  { name: "XXX", surname: "Doe", ippon: 1, kekkou: 2, points: 5 }
-];
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import AddCategoryModal from "./Components/AddCategoryModal"; // make sure path is correct
 
 const TournoiDetails = () => {
+  const { id: tournamentId } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddCategory = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCategorySubmit = async (categoryData) => {
+    try {
+      const payload = {
+        rank: categoryData.grades,
+        gender: categoryData.gender,
+        weight_category_id: categoryData.weight_category_id,
+        elimination_type: "Directe",
+        age_group_id: categoryData.age_group_id
+      };
+
+      console.log("Sending payload:", payload);
+
+      await axios.post(`http://localhost:3000/tournaments/${tournamentId}/categories`, payload);
+      alert("✅ Catégorie ajoutée avec succès !");
+    } catch (error) {
+      console.error("❌ Erreur lors du POST :", error.response?.data || error.message);
+      alert("Erreur serveur. Voir la console.");
+    }
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="content">
-      <h1>Détails du Tournoi</h1>
-      <MatchTable matches={matchesData} />  
-      <RankingTable rankings={rankingsData} /> 
+    <div>
+      <button onClick={handleAddCategory}>➕ Ajouter Catégorie</button>
+      {/* <button onClick={() => handleCategorySubmit({
+        grades: ["Ceinture Blanche"],
+        gender: "H",
+        weight_category_id: 1,
+        age_group_id: 1
+      })}>🚀 Tester création catégorie</button> */}
+
+      <AddCategoryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCategorySubmit}
+      />
     </div>
   );
 };

@@ -1,27 +1,55 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styles from "./AddCompetitors.module.css";
 
 const AddCompetitorModal = ({ isOpen, onClose, onAdd }) => {
   const [form, setForm] = useState({
     name: "",
+    firstName: "",
     grade: "",
     birthDate: "",
-    category: ""
+    sex: "",
+    weight: ""
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAdd(form);
-    onClose();
+
+    try {
+      const payload = {
+        firstname: form.firstName,
+        lastname: form.name,
+        birthday: form.birthDate,
+        club: "", // optional
+        country: "France", // you can allow the user to choose this later
+        weight: parseFloat(form.weight),
+        rank: form.grade,
+        gender: form.sex === "Homme" ? "H" : "F"
+      };
+
+      const response = await axios.post("http://localhost:3000/competitors", payload);
+
+      // Update the local UI
+      onAdd({
+        name: `${form.firstName} ${form.name}`,
+        grade: form.grade,
+        birthDate: form.birthDate,
+        category: `-${form.weight}kg`
+      });
+
+      onClose();
+    } catch (error) {
+      console.error("Erreur lors de l'ajout du compétiteur :", error);
+      alert("Échec de l'ajout. Vérifiez la console pour plus de détails.");
+    }
   };
 
   const handleImportCSV = () => {
     alert("Importer CSV clicked. You can add CSV logic here.");
-    // Later you can implement actual CSV import handling here
   };
 
   if (!isOpen) return null;
@@ -34,6 +62,10 @@ const AddCompetitorModal = ({ isOpen, onClose, onAdd }) => {
           <label>
             Nom:
             <input name="name" value={form.name} onChange={handleChange} required />
+          </label>
+          <label>
+            Prénom:
+            <input name="firstName" value={form.firstName} onChange={handleChange} required />
           </label>
           <label>
             Grade:
@@ -53,8 +85,16 @@ const AddCompetitorModal = ({ isOpen, onClose, onAdd }) => {
             <input type="date" name="birthDate" value={form.birthDate} onChange={handleChange} required />
           </label>
           <label>
-            Catégorie:
-            <input name="category" value={form.category} onChange={handleChange} required />
+            Sexe:
+            <select name="sex" value={form.sex} onChange={handleChange} required>
+              <option value="">Sélectionner</option>
+              <option value="Homme">Homme</option>
+              <option value="Femme">Femme</option>
+            </select>
+          </label>
+          <label>
+            Poids (kg):
+            <input type="number" name="weight" value={form.weight} onChange={handleChange} required />
           </label>
 
           <div className={styles.actions}>
