@@ -17,9 +17,10 @@ export type Tournament = z.infer<typeof TournamentSchema>
 
 export const CategorySchema = z.object({
     id: z.string().uuid(),
+    name: z.string(),
     rank: z.array(z.nativeEnum(EnumRank)),
     gender: z.optional(z.nativeEnum(EnumGender)),
-    weight_category: z.optional(z.string()),
+    weight_category: z.optional(z.number()),
     elimination_type: z.nativeEnum(EnumEliminationType),
     age_group: z.optional(z.number())
 })

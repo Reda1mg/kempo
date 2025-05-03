@@ -380,6 +380,16 @@
           "length": 36,
           "mappedType": "string"
         },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
+          "mappedType": "string"
+        },
         "tournament_id": {
           "name": "tournament_id",
           "type": "varchar(36)",

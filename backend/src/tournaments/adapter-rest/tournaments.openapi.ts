@@ -383,7 +383,7 @@ export const TournamentsRoutes = {
     }),
     assignCompetitor: createRoute({
         method: 'post',
-        path: '/{id}/assign-competitor/{competitorId}',
+        path: '/{id}/assign-competitor/{categoryId}',
         summary: 'Assign one competitor to a category',
         description: 'Assign one competitor to a category',
         request: {

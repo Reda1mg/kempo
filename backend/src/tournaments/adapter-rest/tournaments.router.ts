@@ -176,6 +176,7 @@ export function buildTournamentsRouter() {
         const result = rawResult.map((category) => {
             return {
                 id: category.id,
+                name: category.name,
                 rank: category.rank,
                 gender: category.gender,
                 weight_category: category.weight_category?.id,
@@ -255,6 +256,7 @@ export function buildTournamentsRouter() {
         const result = rawResult.map((category) => {
             return {
                 id: category.id,
+                name: category.name,
                 rank: category.rank,
                 gender: category.gender,
                 weight_category: category.weight_category?.id,
