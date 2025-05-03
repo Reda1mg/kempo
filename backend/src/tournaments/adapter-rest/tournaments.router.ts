@@ -87,10 +87,12 @@ export function buildTournamentsRouter() {
         const { id,competitorId } = ctx.req.valid('param')
 
 
+
         const em = ctx.get("em");
         const tournament = await em.findOne(Tournament, { id },{ populate: ['competitors'] })
         if (tournament == null) {
-            return ctx.text("Not found", 404);
+
+            return ctx.text("Tournament not found", 404);
         }
 
         const competitor = await em.findOne(Competitor, { id: competitorId })
