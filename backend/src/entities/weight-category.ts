@@ -9,7 +9,7 @@ export enum EnumGender{
 
 
 export class WeightCategory{
-    id!: string ;
+    id!: number ;
     name!: string;
     weight_min!: number;
     weight_max!: number;

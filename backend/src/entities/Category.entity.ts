@@ -12,6 +12,7 @@ export enum EnumEliminationType {
 
 export class Category {
     id!: string;
+    name!: string;
     tournament!: Tournament;
     rank!: EnumRank[];
     gender?: EnumGender;
@@ -25,6 +26,7 @@ export const CategorySchema = new EntitySchema({
     class: Category,
     properties: {
         id: { type: 'uuid', onCreate: () => v4(), primary: true },
+        name: { type: 'string', nullable: true },
         tournament: { kind: 'm:1', entity: () => Tournament },
         rank: {type: 'array' },
         gender: { enum: true, items: () => Object.values(EnumGender) },
