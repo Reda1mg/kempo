@@ -1,5 +1,4 @@
 import { getApp } from "../../api/get-app.ts";
-import { AgeGroup } from "../../entities/age-group.entity.ts";
 import { WeightCategory } from "../../entities/weight-category.ts";
 import { WeightCategoriesRoutes } from "./weight-categories.openapi.ts";
 
