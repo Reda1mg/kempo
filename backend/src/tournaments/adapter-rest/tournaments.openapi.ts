@@ -166,22 +166,15 @@ export const TournamentsRoutes = {
     }),
     addCompetitor: createRoute({
         method: 'post',
-        path: '/add-competitor/{id}',
-        summary: 'Add one competitor ',
+        path: '{id}/add-competitor/{competitorId}',
+        summary: 'Add one competitor on the tournament',
         description: 'Add one competitor on the tournament by competitor ID',
         request: {
             params: z.object({
-                id: z.string().uuid()
+                id: z.string().uuid(),
+                competitorId: z.string().uuid()
             }),
-            body :{
-                content :{
-                    "application/json" : {
-                        schema : z.object({ 
-                            competitor_id: z.string().uuid()
-                         })
-                    }
-                }
-            }
+            
         },
         responses: {
             201: {

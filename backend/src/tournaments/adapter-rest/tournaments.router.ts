@@ -84,8 +84,8 @@ export function buildTournamentsRouter() {
         return ctx.text("Tournament Deleted", 202)
     })
     .openapi(TournamentsRoutes.addCompetitor, async (ctx) => {
-        const { id } = ctx.req.valid('param')
-        const body = ctx.req.valid('json')
+        const { id,competitorId } = ctx.req.valid('param')
+
 
         const em = ctx.get("em");
         const tournament = await em.findOne(Tournament, { id },{ populate: ['competitors'] })
@@ -93,7 +93,7 @@ export function buildTournamentsRouter() {
             return ctx.text("Not found", 404);
         }
 
-        const competitor = await em.findOne(Competitor, { id: body.competitor_id })
+        const competitor = await em.findOne(Competitor, { id: competitorId })
         if (competitor == null) {
             return ctx.text("Competitor not found", 404);
         }
