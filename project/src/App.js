@@ -6,6 +6,7 @@ import Competitors from "./pages/Competitors/Competitors";
 import TournoiDetails from "./pages/TournoiDetails/ToutnoiDetails"
 import Telecommande from "./pages/Telecommande/components/Telecommande";
 import Scoreboard from "./pages/Scoreboard/Scoarboard";
+import AddCompetitorsToCategory from "./pages/TournoiDetails/Components/addCompetitorsToCategory";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='/telecommande' element={<div className='content'><Telecommande /></div>}></Route>
           <Route path='/scoreboard' element={<div className='content'><Scoreboard /></div>}></Route>
           <Route path='/tournoiDetails/:id' element={<TournoiDetails />}></Route>
+          <Route path="/tournoiDetails/:id/ajouter-competiteurs" element={<AddCompetitorsToCategory />} />
         </Routes>
       </Router>
     </div>

@@ -1,59 +1,84 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AddCategoryModal from "./Components/AddCategoryModal";
+import styles from "./TournoiDetails.css";
 
 const TournoiDetails = () => {
   const { id: tournamentId } = useParams();
+  const navigate = useNavigate();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  // Fetch categories for the tournament
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3000/tournaments/${tournamentId}/categories`);
+      setCategories(res.data);
+    } catch (err) {
+      console.error("Erreur chargement catégories :", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/tournaments/${tournamentId}/categories`);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("❌ Failed to fetch categories:", error);
-      }
-    };
     fetchCategories();
   }, [tournamentId]);
 
-  // Add category handler
-  const handleAddCategory = () => {
-    setIsModalOpen(true);
-  };
+  const handleAddCategory = () => setIsModalOpen(true);
 
   const handleCategorySubmit = async (categoryData) => {
     try {
       const payload = {
+        name: "AutoCat", // You may modify this or make it dynamic
         rank: categoryData.grades,
         gender: categoryData.gender,
-        weight_category_id: parseInt(categoryData.weight_category_id),
-        age_group_id: parseInt(categoryData.age_group_id),
-        elimination_type: "Directe"
+        weight_category: categoryData.weight_category_id,
+        elimination_type: "Directe",
+        age_group: categoryData.age_group_id,
       };
 
       await axios.post(`http://localhost:3000/tournaments/${tournamentId}/categories`, payload);
-      alert("✅ Catégorie ajoutée avec succès !");
-      setIsModalOpen(false);
-
-      // Refresh the list after adding
-      const res = await axios.get(`http://localhost:3000/tournaments/${tournamentId}/categories`);
-      setCategories(res.data);
+      alert("Catégorie ajoutée avec succès !");
+      fetchCategories();
     } catch (error) {
-      console.error("❌ Erreur lors de l'ajout :", error.response?.data || error.message);
-      alert("Erreur serveur. Voir la console.");
+      console.error("Erreur lors de l'ajout de la catégorie :", error.response?.data || error.message);
+      alert("Erreur lors de l'ajout de la catégorie. Voir la console.");
+    }
+    setIsModalOpen(false);
+  };
+
+  const goToAddCompetitorsPage = (categoryId) => {
+    navigate(`/tournoiDetails/${tournamentId}/ajouter-competiteurs?categoryId=${categoryId}`);
+  };
+
+  const handleManualTestInsert = async () => {
+    const testPayload = {
+      name: "Test Category",
+      rank: ["Ceinture Blanche", "Ceinture Jaune"],
+      gender: "H",
+      weight_category: 1,
+      age_group: 1,
+      elimination_type: "Directe"
+    };
+
+    try {
+      await axios.post(`http://localhost:3000/tournaments/${tournamentId}/categories`, testPayload);
+      alert("✅ Catégorie de test insérée !");
+      fetchCategories();
+    } catch (err) {
+      console.error("❌ Erreur insertion test :", err.response?.data || err.message);
+      alert("Erreur d'insertion test. Voir la console.");
     }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>📝 Détails du Tournoi</h2>
+    <div className={styles.container}>
+      <h2>Détails du Tournoi</h2>
 
-      <button onClick={handleAddCategory}>➕ Ajouter Catégorie</button>
+      <div className={styles.actions}>
+        <button onClick={handleAddCategory}>➕ Ajouter Catégorie</button>
+        <button onClick={handleManualTestInsert}>📥 Insert Test Catégorie</button>
+      </div>
 
       <AddCategoryModal
         isOpen={isModalOpen}
@@ -61,34 +86,31 @@ const TournoiDetails = () => {
         onSubmit={handleCategorySubmit}
       />
 
-      <h3 style={{ marginTop: "30px" }}>📋 Catégories existantes</h3>
-      <table border="1" cellPadding="8" style={{ width: "100%", marginTop: "10px" }}>
+      <table className={styles.categoryTable}>
         <thead>
           <tr>
-            <th>Rang</th>
+            <th>Rangs</th>
             <th>Genre</th>
-            <th>ID Poids</th>
-            <th>ID Âge</th>
-            <th>Élimination</th>
+            <th>Poids</th>
+            <th>Âge</th>
+            <th>Type élimination</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {categories.length === 0 ? (
-            <tr>
-              <td colSpan="6" style={{ textAlign: "center" }}>Aucune catégorie trouvée.</td>
-            </tr>
+            <tr><td colSpan="6">Aucune catégorie pour ce tournoi.</td></tr>
           ) : (
-            categories.map((cat, index) => (
-              <tr key={index}>
-                <td>{Array.isArray(cat.rank) ? cat.rank.join(", ") : cat.rank}</td>
+            categories.map((cat, i) => (
+              <tr key={i}>
+                <td>{cat.rank?.join(", ")}</td>
                 <td>{cat.gender}</td>
-                <td>{cat.weight_category_id ?? "N/A"}</td>
-                <td>{cat.age_group_id ?? "N/A"}</td>
+                <td>{cat.weight_category?.name || "-"}</td>
+                <td>{cat.age_group?.name || "-"}</td>
                 <td>{cat.elimination_type}</td>
                 <td>
-                  <button onClick={() => alert(JSON.stringify(cat, null, 2))}>
-                    🔍 Détails
+                  <button onClick={() => goToAddCompetitorsPage(cat.id)}>
+                    ➕ Afficher les compétiteurs
                   </button>
                 </td>
               </tr>
