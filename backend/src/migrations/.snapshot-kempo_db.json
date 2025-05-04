@@ -416,7 +416,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "enumItems": [
             "H",
             "F"
@@ -745,6 +745,222 @@
           ],
           "referencedTableName": "competitor",
           "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 36,
+          "mappedType": "string"
+        },
+        "competitor1_id": {
+          "name": "competitor1_id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 36,
+          "mappedType": "string"
+        },
+        "competitor2_id": {
+          "name": "competitor2_id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 36,
+          "mappedType": "string"
+        },
+        "score1": {
+          "name": "score1",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "default": "0",
+          "mappedType": "integer"
+        },
+        "score2": {
+          "name": "score2",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "default": "0",
+          "mappedType": "integer"
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 36,
+          "mappedType": "string"
+        },
+        "keikuka1": {
+          "name": "keikuka1",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "default": "0",
+          "mappedType": "integer"
+        },
+        "keikuka2": {
+          "name": "keikuka2",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "default": "0",
+          "mappedType": "integer"
+        },
+        "winner_id": {
+          "name": "winner_id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 36,
+          "default": "null",
+          "mappedType": "string"
+        },
+        "is_finished": {
+          "name": "is_finished",
+          "type": "tinyint(1)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 1,
+          "default": "false",
+          "mappedType": "boolean"
+        }
+      },
+      "name": "match",
+      "indexes": [
+        {
+          "columnNames": [
+            "competitor1_id"
+          ],
+          "composite": false,
+          "keyName": "match_competitor1_id_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "competitor2_id"
+          ],
+          "composite": false,
+          "keyName": "match_competitor2_id_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "category_id"
+          ],
+          "composite": false,
+          "keyName": "match_category_id_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "winner_id"
+          ],
+          "composite": false,
+          "keyName": "match_winner_id_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "match_competitor1_id_foreign": {
+          "constraintName": "match_competitor1_id_foreign",
+          "columnNames": [
+            "competitor1_id"
+          ],
+          "localTableName": "match",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "competitor",
+          "updateRule": "cascade"
+        },
+        "match_competitor2_id_foreign": {
+          "constraintName": "match_competitor2_id_foreign",
+          "columnNames": [
+            "competitor2_id"
+          ],
+          "localTableName": "match",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "competitor",
+          "updateRule": "cascade"
+        },
+        "match_category_id_foreign": {
+          "constraintName": "match_category_id_foreign",
+          "columnNames": [
+            "category_id"
+          ],
+          "localTableName": "match",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "category",
+          "updateRule": "cascade"
+        },
+        "match_winner_id_foreign": {
+          "constraintName": "match_winner_id_foreign",
+          "columnNames": [
+            "winner_id"
+          ],
+          "localTableName": "match",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "competitor",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         }
       },

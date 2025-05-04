@@ -1,7 +1,7 @@
 
 import { getApp } from "../../api/get-app.ts";
 import { AgeGroup } from "../../entities/age-group.entity.ts";
-import { Category } from "../../entities/Category.entity.ts";
+import { Category, EnumEliminationType } from "../../entities/Category.entity.ts";
 import { Competitor } from "../../entities/Competitor.entity.ts";
 import { TournamentCompetitorCategory } from "../../entities/tournament-competitor-category.entity.ts";
 import { Tournament } from "../../entities/Tournament.entity.ts";
@@ -305,7 +305,49 @@ export function buildTournamentsRouter() {
         
 
     })
+    .openapi(TournamentsRoutes.startTournament, async (ctx) => {
+        const { id } = ctx.req.valid('param')
+        const em = ctx.get("em")
+        const tournament = await em.findOne(Tournament, { id },{ populate: ['competitors'] })
+        if (tournament == null) {
+            return ctx.text("Not found", 404);
+        }
+
+        const tournamentCompetitor = await em.find(TournamentCompetitorCategory, { tournament: id },{ populate: ['competitor'] })
+        if (tournamentCompetitor == null) {
+            return ctx.text("No competitor in this tournament", 404);
+        }
+        for (const competitor of tournamentCompetitor) {
+            if (competitor.category == null) {
+                return ctx.text("Competitor not assigned to category", 404);
+            }
+        }
         
+        const categories = await em.find(Category, { tournament: id },{ populate: ['competitors'] })
+        if (categories == null) {
+            return ctx.text("No category in this tournament", 404);
+        }
+
+
+        for (const category of categories) {
+            const competitors = await em.find(TournamentCompetitorCategory, { category: category.id },{ populate: ['competitor'] })
+            if (category.elimination_type == EnumEliminationType.POOL) {
+                if (competitors.length <= 2) {
+                    return ctx.text("Not enough competitors in this category", 404);
+                }
+
+            }else  {
+
+            }
+            
+        }
+            
+
+
+
+        return ctx.text("Tournament started", 200)
+        
+    })   
 
 
 

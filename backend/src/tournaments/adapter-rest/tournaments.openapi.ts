@@ -502,6 +502,37 @@ export const TournamentsRoutes = {
             },
         }
     }),
+    startTournament: createRoute({
+        method: 'post',
+        path: '/{id}/start',
+        summary: 'Start the tournament',
+        description: 'Start the tournament and create the matches',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            200: {
+                description: 'Tournament started',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+                
+        }
+    }),
+    
    
 
 }

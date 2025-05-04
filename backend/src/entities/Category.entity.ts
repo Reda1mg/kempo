@@ -29,7 +29,7 @@ export const CategorySchema = new EntitySchema({
         name: { type: 'string', nullable: true },
         tournament: { kind: 'm:1', entity: () => Tournament },
         rank: {type: 'array' },
-        gender: { enum: true, items: () => Object.values(EnumGender) },
+        gender: { enum: true, items: () => Object.values(EnumGender), nullable: true },
         weight_category: { kind: 'm:1', entity: () => WeightCategory, nullable: true },
         age_group: { kind: 'm:1', entity: () => AgeGroup, nullable: true },
         elimination_type: { enum: true, items: () => Object.values(EnumEliminationType) },
