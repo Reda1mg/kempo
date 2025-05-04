@@ -1,31 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./CompetitorsTable.module.css";
 import Filter from "./Filter";
-import AjouterCompetiteurs from "./AddCompetitors"; // Make sure this component exists and is styled
+import AjouterCompetiteurs from "./AddCompetitors"; // Ensure this exists
 
 const CompetitorTable = () => {
+  const [competitors, setCompetitors] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("");
-  const [competitors, setCompetitors] = useState([
-    { name: "Jean Martin", grade: "Ceinture Noire", birthDate: "1990-03-12", category: "-75kg" },
-    { name: "Paul Dupont", grade: "Ceinture Bleue", birthDate: "1995-07-05", category: "-80kg" },
-    { name: "Lucie Bernard", grade: "Ceinture Verte", birthDate: "1998-11-20", category: "-60kg" },
-    { name: "Maxime Dubois", grade: "Ceinture Marron", birthDate: "1992-08-10", category: "-70kg" },
-  ]);
-
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
+  // Fetch competitors from backend
+  useEffect(() => {
+    const fetchCompetitors = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/competitors");
+        setCompetitors(res.data);
+      } catch (error) {
+        console.error("❌ Failed to fetch competitors:", error);
+      }
+    };
+
+    fetchCompetitors();
+  }, []);
+
+  // Handle manual addition (optional)
   const handleAdd = (newCompetitor) => {
     setCompetitors([...competitors, newCompetitor]);
     setIsAddModalOpen(false);
   };
 
-  const filteredCompetitors = competitors.filter((comp) =>
-    comp.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-    (selectedDate === "" || comp.birthDate.startsWith(selectedDate)) &&
-    (selectedGrade === "" || comp.grade === selectedGrade)
-  );
+  const filteredCompetitors = competitors.filter((c) => {
+    const fullName = `${c.firstname} ${c.lastname}`.toLowerCase();
+    const matchesName = fullName.includes(searchQuery.toLowerCase());
+    const matchesDate = !selectedDate || (c.birthday && c.birthday.startsWith(selectedDate));
+    const matchesGrade = !selectedGrade || c.rank === selectedGrade;
+    return matchesName && matchesDate && matchesGrade;
+  });
 
   return (
     <div className={styles.container}>
@@ -36,7 +48,7 @@ const CompetitorTable = () => {
         setSelectedDate={setSelectedDate}
         selectedGrade={selectedGrade}
         setSelectedGrade={setSelectedGrade}
-        onOpenAddModal={() => setIsAddModalOpen(true)} // 👈 handle modal open
+        onOpenAddModal={() => setIsAddModalOpen(true)}
       />
 
       <div className={styles.tableContainer}>
@@ -46,18 +58,18 @@ const CompetitorTable = () => {
               <th>👤 Nom</th>
               <th>🏆 Grade</th>
               <th>📅 Date de Naissance</th>
-              <th>⚖️ Catégorie</th>
+              <th>⚖️ Poids</th>
               <th>⚙️ Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredCompetitors.length > 0 ? (
-              filteredCompetitors.map((comp, index) => (
-                <tr key={index}>
-                  <td>{comp.name}</td>
-                  <td>{comp.grade}</td>
-                  <td>{comp.birthDate}</td>
-                  <td>{comp.category}</td>
+              filteredCompetitors.map((c) => (
+                <tr key={c.id}>
+                  <td>{c.firstname} {c.lastname}</td>
+                  <td>{c.rank}</td>
+                  <td>{c.birthday ? new Date(c.birthday).toLocaleDateString() : "-"}</td>
+                  <td>{c.weight ?? "-"}</td>
                   <td>
                     <button className={styles.btnEdit}>✏️</button>
                     <button className={styles.btnDelete}>🗑️</button>
@@ -73,7 +85,6 @@ const CompetitorTable = () => {
         </table>
       </div>
 
-      {/* Modal component */}
       <AjouterCompetiteurs
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
