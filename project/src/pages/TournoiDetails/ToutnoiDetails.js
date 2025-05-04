@@ -77,7 +77,7 @@ const TournoiDetails = () => {
 
       <div className={styles.actions}>
         <button onClick={handleAddCategory}>➕ Ajouter Catégorie</button>
-        <button onClick={handleManualTestInsert}>📥 Insert Test Catégorie</button>
+        {/* <button onClick={handleManualTestInsert}>📥 Insert Test Catégorie</button> */}
       </div>
 
       <AddCategoryModal
