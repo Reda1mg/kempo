@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./CompetitorsTable.module.css";
 import Filter from "./Filter";
-import AjouterCompetiteurs from "./AddCompetitors"; // Ensure this exists
+import AjouterCompetiteurs from "./AddCompetitors";
+import EditCompetitors from "./EditCompetitors";
 
 const CompetitorTable = () => {
   const [competitors, setCompetitors] = useState([]);
@@ -11,24 +12,49 @@ const CompetitorTable = () => {
   const [selectedGrade, setSelectedGrade] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // Fetch competitors from backend
-  useEffect(() => {
-    const fetchCompetitors = async () => {
-      try {
-        const res = await axios.get("http://localhost:3000/competitors");
-        setCompetitors(res.data);
-      } catch (error) {
-        console.error("❌ Failed to fetch competitors:", error);
-      }
-    };
+  const [selectedCompetitor, setSelectedCompetitor] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const fetchCompetitors = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/competitors");
+      setCompetitors(res.data);
+    } catch (error) {
+      console.error("❌ Failed to fetch competitors:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchCompetitors();
   }, []);
 
-  // Handle manual addition (optional)
   const handleAdd = (newCompetitor) => {
     setCompetitors([...competitors, newCompetitor]);
     setIsAddModalOpen(false);
+  };
+
+  const openEditModal = (competitor) => {
+    setSelectedCompetitor(competitor);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedCompetitor(null);
+  };
+
+  const handleDelete = async (competitorId) => {
+    const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer ce compétiteur ?");
+    if (!confirmed) return;
+
+    try {
+      await axios.delete(`http://localhost:3000/competitors/${competitorId}`);
+      setCompetitors(prev => prev.filter(c => c.id !== competitorId));
+      alert("✅ Compétiteur supprimé !");
+    } catch (error) {
+      console.error("❌ Erreur suppression :", error.response?.data || error.message);
+      alert("Erreur lors de la suppression du compétiteur.");
+    }
   };
 
   const filteredCompetitors = competitors.filter((c) => {
@@ -71,8 +97,8 @@ const CompetitorTable = () => {
                   <td>{c.birthday ? new Date(c.birthday).toLocaleDateString() : "-"}</td>
                   <td>{c.weight ?? "-"}</td>
                   <td>
-                    <button className={styles.btnEdit}>✏️</button>
-                    <button className={styles.btnDelete}>🗑️</button>
+                    <button className={styles.btnEdit} onClick={() => openEditModal(c)}>✏️</button>
+                    <button className={styles.btnDelete} onClick={() => handleDelete(c.id)}>🗑️</button>
                   </td>
                 </tr>
               ))
@@ -89,6 +115,13 @@ const CompetitorTable = () => {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onAdd={handleAdd}
+      />
+
+      <EditCompetitors
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        competitor={selectedCompetitor}
+        onSave={fetchCompetitors}
       />
     </div>
   );
