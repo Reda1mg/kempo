@@ -9,10 +9,6 @@ export class Migration20250503204354 extends Migration {
     this.addSql(`alter table \`match\` add unique \`match_category_id_unique\`(\`category_id\`);`);
     this.addSql(`alter table \`match\` add unique \`match_winner_id_unique\`(\`winner_id\`);`);
 
-    this.addSql(`alter table \`match\` add constraint \`match_competitor1_id_foreign\` foreign key (\`competitor1_id\`) references \`competitor\` (\`id\`) on update cascade;`);
-    this.addSql(`alter table \`match\` add constraint \`match_competitor2_id_foreign\` foreign key (\`competitor2_id\`) references \`competitor\` (\`id\`) on update cascade;`);
-    this.addSql(`alter table \`match\` add constraint \`match_category_id_foreign\` foreign key (\`category_id\`) references \`category\` (\`id\`) on update cascade;`);
-    this.addSql(`alter table \`match\` add constraint \`match_winner_id_foreign\` foreign key (\`winner_id\`) references \`competitor\` (\`id\`) on update cascade on delete set null;`);
 
     this.addSql(`alter table \`category\` modify \`gender\` enum('H', 'F') null;`);
   }

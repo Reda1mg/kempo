@@ -6,6 +6,7 @@ import { buildRanksRouter } from "../rank/adapter-rest/ranks.router.ts";
 import { buildCompetitorsRouter } from "../competitors/adapter-rest/competitors.router.ts";
 import { buildAgeGroupsRouter } from "../age-groups/adapter-rest/age-groups.router.ts";
 import { buildWeightCategoriesRouter } from "../weight-categories/adapter-rest/weight-categories.router.ts";
+import { buildMatchesRouter } from "../matches/adapter-rest/matches.router.ts";
 
 export const registerAppRoutes = (baseApp: OpenAPIHono<AppEnv>) => {
     let app = baseApp.route('/tournaments', buildTournamentsRouter())
@@ -13,6 +14,7 @@ export const registerAppRoutes = (baseApp: OpenAPIHono<AppEnv>) => {
     app = baseApp.route('/competitors',buildCompetitorsRouter())
     app = baseApp.route('/age-groups', buildAgeGroupsRouter())
     app = baseApp.route('/weight-categories', buildWeightCategoriesRouter())
+    app = baseApp.route('/matches', buildMatchesRouter())
 
 
 

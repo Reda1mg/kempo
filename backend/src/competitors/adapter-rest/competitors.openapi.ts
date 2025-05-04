@@ -159,6 +159,23 @@ export const CompetitorsRoutes = {
                 }
             }
         }
-    })
+    }),
+    getAll : createRoute({
+        method: 'get',
+        path: '/',
+        summary: 'Get all competitors',
+        description: 'Get all competitors',
+        responses: {
+            200: {
+                description: 'List of competitors',
+                content: {
+                    'application/json': {
+                        schema: z.array(CompetitorSchema)
+                    }
+                }
+            },
+        }
+    }),
 
+    
 }
