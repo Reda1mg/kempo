@@ -1,4 +1,5 @@
 import { getApp } from "../../api/get-app.ts";
+import { Competitor } from "../../entities/Competitor.entity.ts";
 import { Match } from "../../entities/match.entity.ts";
 import { MatchesRoutes } from "./maches.openapi.ts";
 
@@ -24,18 +25,30 @@ export function buildMatchesRouter() {
 
         if (match.score1 > match.score2) {
             match.winner = match.competitor1
-        }else if (match.score2 > match.score1) {
+        } else if (match.score2 > match.score1) {
             match.winner = match.competitor2
-        }else if (match.keikuka1 > match.keikuka2) {
+        } else if (match.keikuka1 > match.keikuka2) {
             match.winner = match.competitor2
-        }else if (match.keikuka2 > match.keikuka1) {
+        } else if (match.keikuka2 > match.keikuka1) {
             match.winner = match.competitor1
         }
         else {
-            match.winner = null
+            match.winner = body.winner ? await em.findOne(Competitor, { id: body.winner }) : null
+        }
+
+        if (match.winner != null && match.next_match != null) {
+            const nextMatch = await em.findOne(Match, { id: match.next_match.id })
+            if (nextMatch == null) {
+                return ctx.text("Next match not found", 404);
+            }
+            if (nextMatch?.competitor1 == null) {
+                nextMatch.competitor1 = match.winner
+            } else if (nextMatch?.competitor2 == null) {
+                nextMatch.competitor2 = match.winner
+            }
+
         }
         await em.persistAndFlush(match);
         return ctx.json(match.winner?.id ?? null, 200)
     })
 }
- 

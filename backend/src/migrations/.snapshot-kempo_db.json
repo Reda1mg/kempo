@@ -768,7 +768,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "length": 36,
           "mappedType": "string"
         },
@@ -778,7 +778,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "length": 36,
           "mappedType": "string"
         },
@@ -857,6 +857,28 @@
           "length": 1,
           "default": "false",
           "mappedType": "boolean"
+        },
+        "pool_number": {
+          "name": "pool_number",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "default": "'0'",
+          "mappedType": "string"
+        },
+        "next_match_id": {
+          "name": "next_match_id",
+          "type": "varchar(36)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 36,
+          "default": "null",
+          "mappedType": "string"
         }
       },
       "name": "match",
@@ -866,40 +888,50 @@
             "competitor1_id"
           ],
           "composite": false,
-          "keyName": "match_competitor1_id_unique",
-          "constraint": true,
+          "keyName": "match_competitor1_id_index",
+          "constraint": false,
           "primary": false,
-          "unique": true
+          "unique": false
         },
         {
           "columnNames": [
             "competitor2_id"
           ],
           "composite": false,
-          "keyName": "match_competitor2_id_unique",
-          "constraint": true,
+          "keyName": "match_competitor2_id_index",
+          "constraint": false,
           "primary": false,
-          "unique": true
+          "unique": false
         },
         {
           "columnNames": [
             "category_id"
           ],
           "composite": false,
-          "keyName": "match_category_id_unique",
-          "constraint": true,
+          "keyName": "match_category_id_index",
+          "constraint": false,
           "primary": false,
-          "unique": true
+          "unique": false
         },
         {
           "columnNames": [
             "winner_id"
           ],
           "composite": false,
-          "keyName": "match_winner_id_unique",
-          "constraint": true,
+          "keyName": "match_winner_id_index",
+          "constraint": false,
           "primary": false,
-          "unique": true
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "next_match_id"
+          ],
+          "composite": false,
+          "keyName": "match_next_match_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
         },
         {
           "keyName": "PRIMARY",
@@ -924,6 +956,7 @@
             "id"
           ],
           "referencedTableName": "competitor",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         },
         "match_competitor2_id_foreign": {
@@ -936,6 +969,7 @@
             "id"
           ],
           "referencedTableName": "competitor",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         },
         "match_category_id_foreign": {
@@ -960,6 +994,19 @@
             "id"
           ],
           "referencedTableName": "competitor",
+          "deleteRule": "set null",
+          "updateRule": "cascade"
+        },
+        "match_next_match_id_foreign": {
+          "constraintName": "match_next_match_id_foreign",
+          "columnNames": [
+            "next_match_id"
+          ],
+          "localTableName": "match",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "match",
           "deleteRule": "set null",
           "updateRule": "cascade"
         }

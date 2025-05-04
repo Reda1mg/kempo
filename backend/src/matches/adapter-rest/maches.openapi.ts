@@ -19,6 +19,7 @@ export const MatchesRoutes = {
                             score2: z.number(),
                             keikuka1: z.number(),
                             keikuka2: z.number(),
+                            winner: z.string().uuid().optional(),
                         })
                     }
                 }

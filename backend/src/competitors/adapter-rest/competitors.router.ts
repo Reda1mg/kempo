@@ -100,14 +100,14 @@ export function buildCompetitorsRouter() {
                 }
 
             }
-            if (category.weight_category){
+            if (category.weight_category) {
                 query = {
                     ...query,
                     weight: { $gte: category.weight_category.weight_min, $lte: category.weight_category.weight_max }
                 }
             }
 
-             if (category.age_group) {
+            if (category.age_group) {
                 let dateAgeMin = new Date()
                 let dateAgeMax = new Date()
                 dateAgeMin.setFullYear(dateAgeMin.getFullYear() - category.age_group.age_min)
@@ -116,12 +116,17 @@ export function buildCompetitorsRouter() {
                     ...query,
                     birthday: { $lte: dateAgeMin, $gte: dateAgeMax }
                 }
-             }
+            }
 
-            
+
 
             const competitors = await em.find(Competitor, query)
 
+            return ctx.json(competitors, 200)
+        })
+        .openapi(CompetitorsRoutes.getAll, async (ctx) => {
+            const em = ctx.get("em")
+            const competitors = await em.find(Competitor, {}, { populate: ['rank'] })
             return ctx.json(competitors, 200)
         })
 }
