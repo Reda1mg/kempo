@@ -4,7 +4,7 @@ import axios from "axios";
 
 const AddCompetitorsToCategory = () => {
   const location = useLocation();
-  const { id: tournamentId } = useParams(); // gets tournamentId from route param
+  const { id: tournamentId } = useParams(); // Get tournamentId from the URL
   const categoryId = new URLSearchParams(location.search).get("categoryId");
 
   const [competitors, setCompetitors] = useState([]);
@@ -32,14 +32,9 @@ const AddCompetitorsToCategory = () => {
 
   const handleAddClick = async (competitorId) => {
     try {
-      // TEMP: override IDs for testing
-      const testTournamentId = "3e19d0f4-a4da-4618-a735-b659e7a91cff";
-      const testCompetitorId = "2c28975c-4ef2-45b0-b808-6f94b2ed8261";
-
       const res = await axios.post(
-        `http://localhost:3000/tournaments/${testTournamentId}/add-competitor/${testCompetitorId}`
+        `http://localhost:3000/tournaments/${tournamentId}/add-competitor/${competitorId}`
       );
-
       alert("✅ Compétiteur ajouté au tournoi !");
       console.log("✅ Réponse:", res.data);
     } catch (error) {

@@ -7,6 +7,7 @@ import EditTournoiModal from "./EditTournamentModal";
 const TournoiTable = () => {
   const [searchQueryName, setSearchQueryName] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [tournois, setTournois] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTournoi, setSelectedTournoi] = useState(null);
@@ -32,7 +33,8 @@ const TournoiTable = () => {
 
   const filteredTournois = tournois.filter((tournoi) =>
     tournoi.name.toLowerCase().includes(searchQueryName.toLowerCase()) &&
-    (selectedDate === "" || tournoi.start_date?.startsWith(selectedDate))
+    (selectedDate === "" || tournoi.start_date?.startsWith(selectedDate)) &&
+    (selectedCategory === "" || tournoi.rank === selectedCategory)
   );
 
   const handleDelete = async (id) => {
@@ -64,6 +66,8 @@ const TournoiTable = () => {
         setSearchQuery={setSearchQueryName}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
       />
 
       {loading ? (
@@ -74,6 +78,7 @@ const TournoiTable = () => {
             <tr>
               <th>🏆 Nom du Tournoi</th>
               <th>📅 Date</th>
+              <th>📊 Catégorie</th>
               <th>🔍 Actions</th>
             </tr>
           </thead>
@@ -82,7 +87,8 @@ const TournoiTable = () => {
               filteredTournois.map((comp, index) => (
                 <tr key={index}>
                   <td>{comp.name}</td>
-                  <td>{comp.start_date?.split("T")[0]}</td>
+                  <td>{comp.start_date?.split("T")[0]}</td> {/* ✅ Only date */}
+                  <td>{comp.rank}</td>
                   <td className={styles["action-buttons"]}>
                     <button
                       className={styles["edit-btn"]}
@@ -107,13 +113,14 @@ const TournoiTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="3">Aucun tournoi trouvé.</td>
+                <td colSpan="4">Aucun tournoi trouvé.</td>
               </tr>
             )}
           </tbody>
         </table>
       )}
 
+      {/* Modal d'édition */}
       <EditTournoiModal
         isOpen={editOpen}
         onClose={() => setEditOpen(false)}
