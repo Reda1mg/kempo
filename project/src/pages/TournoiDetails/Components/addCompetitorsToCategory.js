@@ -48,18 +48,38 @@ const AddCompetitorsToCategory = () => {
 
   const handleAddClick = async (competitorId) => {
     try {
+      // Step 1: Add competitor to the tournament
       await axios.post(
         `http://localhost:3000/tournaments/${tournamentId}/add-competitor/${competitorId}`
       );
-      alert("✅ Compétiteur ajouté !");
-      await fetchAssignedCompetitors(); // Refresh the assigned list
+
+      // Step 2: Assign competitor to the category
+      await axios.post(
+        `http://localhost:3000/tournaments/${tournamentId}/assign-competitor/${categoryId}`,
+        { competitor_id: competitorId }
+      );
+
+      alert("✅ Compétiteur ajouté et assigné à la catégorie !");
+      await fetchAssignedCompetitors(); // refresh assigned
     } catch (error) {
       console.error("❌ Erreur ajout :", error.response?.data || error.message);
       alert("Erreur ajout compétiteur.");
     }
   };
 
-  // ❗ Remove competitors already assigned to the tournament
+  const handleStartTournament = async () => {
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/tournaments/${tournamentId}/start`
+      );
+      alert("🚀 Tournoi démarré !");
+      console.log("Réponse :", res.data);
+    } catch (error) {
+      console.error("❌ Erreur démarrage tournoi:", error.response?.data || error.message);
+      alert("Impossible de démarrer le tournoi.");
+    }
+  };
+
   const assignedIds = new Set(assignedCompetitors.map((c) => c.id));
   const unassignedCompetitors = competitors.filter((c) => !assignedIds.has(c.id));
 
@@ -110,7 +130,15 @@ const AddCompetitorsToCategory = () => {
         </div>
       )}
 
+      {/* ✅ Competitors already added */}
       <AssignedCompetitors />
+
+      {/* ✅ Start Tournament Button */}
+      <div className={styles.startBtnWrapper}>
+        <button className={styles.startBtn} onClick={handleStartTournament}>
+          🚀 Commencer le tournoi
+        </button>
+      </div>
     </div>
   );
 };
