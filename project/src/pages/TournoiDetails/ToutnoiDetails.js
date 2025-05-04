@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AddCategoryModal from "./Components/AddCategoryModal";
-import styles from "./TournoiDetails.css";
+import styles from "./TournoiDetails.module.css";
 
 const TournoiDetails = () => {
   const { id: tournamentId } = useParams();
