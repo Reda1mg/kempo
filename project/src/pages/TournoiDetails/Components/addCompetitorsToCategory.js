@@ -3,8 +3,8 @@ import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
 const AddCompetitorsToCategory = () => {
-  const { id: tournamentId } = useParams();
   const location = useLocation();
+  const { id: tournamentId } = useParams(); // gets tournamentId from route param
   const categoryId = new URLSearchParams(location.search).get("categoryId");
 
   const [competitors, setCompetitors] = useState([]);
@@ -12,59 +12,63 @@ const AddCompetitorsToCategory = () => {
 
   const fetchCompetitors = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/tournaments/categories/${categoryId}/competitors`);
+      const res = await axios.get(
+        `http://localhost:3000/competitors/categories/${categoryId}`
+      );
       setCompetitors(res.data);
     } catch (error) {
-      console.error("❌ Erreur lors du chargement des compétiteurs :", error.response?.data || error.message);
+      console.error("❌ Erreur lors du chargement des compétiteurs:", error);
       alert("Erreur lors du chargement des compétiteurs. Voir la console.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleAssignTestCompetitor = async () => {
-    try {
-      const testCompetitorId = "your-test-competitor-id"; // Replace with a real one
+  useEffect(() => {
+    if (categoryId) {
+      fetchCompetitors();
+    }
+  }, [categoryId]);
 
-      await axios.post(
-        `http://localhost:3000/tournaments/${tournamentId}/assign-competitor/${categoryId}`,
-        { competitor_id: testCompetitorId }
+  const handleAddClick = async (competitorId) => {
+    try {
+      // TEMP: override IDs for testing
+      const testTournamentId = "3e19d0f4-a4da-4618-a735-b659e7a91cff";
+      const testCompetitorId = "2c28975c-4ef2-45b0-b808-6f94b2ed8261";
+
+      const res = await axios.post(
+        `http://localhost:3000/tournaments/${testTournamentId}/add-competitor/${testCompetitorId}`
       );
 
-      alert("✅ Compétiteur de test assigné !");
-      fetchCompetitors(); // Refresh list
+      alert("✅ Compétiteur ajouté au tournoi !");
+      console.log("✅ Réponse:", res.data);
     } catch (error) {
-      console.error("❌ Erreur d'assignation :", error.response?.data || error.message);
-      alert("Erreur lors de l'assignation. Voir la console.");
+      console.error("❌ Erreur lors de l'ajout :", error.response?.data || error.message);
+      alert("Erreur lors de l'ajout. Voir la console.");
     }
   };
 
-  useEffect(() => {
-    fetchCompetitors();
-  }, [categoryId]);
-
   return (
     <div style={{ padding: "1rem" }}>
-      <h2>Ajouter des Compétiteurs au Tournoi:</h2>
-      <button onClick={handleAssignTestCompetitor}>🧪 Assigner Test Compétiteur</button>
+      <h2>Liste des Compétiteurs</h2>
 
-      <h3>Liste des Compétiteurs</h3>
       {loading ? (
         <p>Chargement...</p>
       ) : competitors.length === 0 ? (
-        <p>Aucun compétiteur assigné à cette catégorie.</p>
+        <p>Aucun compétiteur trouvé pour cette catégorie.</p>
       ) : (
-        <table border="1" cellPadding="8">
+        <table border="1" cellPadding="8" cellSpacing="0">
           <thead>
             <tr>
               <th>Prénom</th>
               <th>Nom</th>
               <th>Genre</th>
               <th>Grade</th>
-              <th>Date de Naissance</th>
+              <th>Date de naissance</th>
               <th>Club</th>
               <th>Pays</th>
               <th>Poids</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -78,6 +82,9 @@ const AddCompetitorsToCategory = () => {
                 <td>{c.club || "-"}</td>
                 <td>{c.country || "-"}</td>
                 <td>{c.weight ?? "-"}</td>
+                <td>
+                  <button onClick={() => handleAddClick(c.id)}>Ajouter</button>
+                </td>
               </tr>
             ))}
           </tbody>
