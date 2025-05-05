@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./addCompetitorToCateg.module.css";
 import AssignedCompetitors from "./AssignedCompetitors";
@@ -8,6 +8,7 @@ const AddCompetitorsToCategory = () => {
   const location = useLocation();
   const { id: tournamentId } = useParams();
   const categoryId = new URLSearchParams(location.search).get("categoryId");
+  const navigate = useNavigate();
 
   const [competitors, setCompetitors] = useState([]);
   const [assignedCompetitors, setAssignedCompetitors] = useState([]);
@@ -48,19 +49,17 @@ const AddCompetitorsToCategory = () => {
 
   const handleAddClick = async (competitorId) => {
     try {
-      // Step 1: Add competitor to the tournament
       await axios.post(
         `http://localhost:3000/tournaments/${tournamentId}/add-competitor/${competitorId}`
       );
 
-      // Step 2: Assign competitor to the category
       await axios.post(
         `http://localhost:3000/tournaments/${tournamentId}/assign-competitor/${categoryId}`,
         { competitor_id: competitorId }
       );
 
       alert("✅ Compétiteur ajouté et assigné à la catégorie !");
-      await fetchAssignedCompetitors(); // refresh assigned
+      await fetchAssignedCompetitors();
     } catch (error) {
       console.error("❌ Erreur ajout :", error.response?.data || error.message);
       alert("Erreur ajout compétiteur.");
@@ -78,6 +77,10 @@ const AddCompetitorsToCategory = () => {
       console.error("❌ Erreur démarrage tournoi:", error.response?.data || error.message);
       alert("Impossible de démarrer le tournoi.");
     }
+  };
+
+  const handleGoToMatches = () => {
+    navigate(`/matches/${categoryId}`);
   };
 
   const assignedIds = new Set(assignedCompetitors.map((c) => c.id));
@@ -130,13 +133,15 @@ const AddCompetitorsToCategory = () => {
         </div>
       )}
 
-      {/* ✅ Competitors already added */}
       <AssignedCompetitors />
 
-      {/* ✅ Start Tournament Button */}
       <div className={styles.startBtnWrapper}>
         <button className={styles.startBtn} onClick={handleStartTournament}>
           🚀 Commencer le tournoi
+        </button>
+
+        <button className={styles.matchBtn} onClick={handleGoToMatches}>
+          📋 Matchs
         </button>
       </div>
     </div>
