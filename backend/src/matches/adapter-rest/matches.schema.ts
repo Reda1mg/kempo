@@ -22,4 +22,51 @@ export const MatchSchema = z.object({
     isFinished: z.boolean(),
     pool_number: z.string()
 })
-    
+
+export const BracketMatchSchema = z.object({
+    "round-1" : z.array(z.object({
+        id: z.string().uuid(),
+        competitor1: z.string().uuid().nullable(),
+        competitor2: z.string().uuid().nullable(),
+        winner: z.string().uuid().nullable(),
+        isFinished: z.boolean(),
+        next_match: z.string().uuid().nullable()
+    })).optional(),
+    "round-2" :  z.array(z.object({
+        id: z.string().uuid(),
+        competitor1: z.string().uuid().nullable(),
+        competitor2: z.string().uuid().nullable(),
+        winner: z.string().uuid().nullable(),
+        isFinished: z.boolean(),
+        next_match: z.string().uuid().nullable()
+    })).optional(),
+    "round-3" :  z.array(z.object({
+        id: z.string().uuid(),
+        competitor1: z.string().uuid().nullable(),
+        competitor2: z.string().uuid().nullable(),
+        winner: z.string().uuid().nullable(),
+        isFinished: z.boolean(),
+        next_match: z.string().uuid().nullable()
+    })).optional(),
+    "round-4" :  z.array(z.object({
+        id: z.string().uuid(),
+        competitor1: z.string().uuid().nullable(),
+        competitor2: z.string().uuid().nullable(),
+        winner: z.string().uuid().nullable(),
+        isFinished: z.boolean(),
+        next_match: z.string().uuid().nullable()
+    })).optional(),
+    "round-5" :  z.array(z.object({
+        id: z.string().uuid(),
+        competitor1: z.string().uuid().nullable(),
+        competitor2: z.string().uuid().nullable(),
+        winner: z.string().uuid().nullable(),
+        isFinished: z.boolean(),
+        next_match: z.string().uuid().nullable()
+    })).optional(),
+
+})
+
+
+
+export type Bracket = z.infer<typeof BracketMatchSchema>

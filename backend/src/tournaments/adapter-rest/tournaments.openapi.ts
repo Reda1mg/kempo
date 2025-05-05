@@ -1,10 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { CategorySchema, CategorySchemaCreate, TournamentSchema } from "./tournaments.schema.ts";
+import { CategorySchema, CategorySchemaCreate, CategorySchemaUpdate, TournamentSchema } from "./tournaments.schema.ts";
 import { EnumRank } from "../../entities/Tournament.entity.ts";
 import { CompetitorSchema } from "../../competitors/adapter-rest/competitors.schema.ts";
 import { assign } from "@mikro-orm/core";
 import { Match } from "../../entities/match.entity.ts";
-import { MatchSchema } from "../../matches/adapter-rest/matches.schema.ts";
+import { BracketMatchSchema, MatchSchema } from "../../matches/adapter-rest/matches.schema.ts";
 
 export const TournamentsRoutes = {
     get: createRoute({
@@ -43,36 +43,36 @@ export const TournamentsRoutes = {
         path: '',
         summary: 'Create one tournament',
         description: 'Create one tournament',
-        request :{
-            body :{
-                content :{
-                    "application/json" : {
-                        schema : z.object({ 
+        request: {
+            body: {
+                content: {
+                    "application/json": {
+                        schema: z.object({
                             name: z.string(),
                             rank: z.nativeEnum(EnumRank).optional(),
                             city: z.string().optional(),
                             start_date: z.coerce.date(),
                             end_date: z.coerce.date().optional(),
                             age_group_id: z.coerce.number().optional()
-                
-                         })
+
+                        })
                     }
                 }
             }
         },
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        
-        responses: {
-        201: {
-            description: 'Tournament created',
-            content: {
-                "text/plain": {
-                    schema: z.string()
-                }
-            }
-        },
 
-    }
+        responses: {
+            201: {
+                description: 'Tournament created',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+
+        }
     }),
 
     put: createRoute({
@@ -80,40 +80,40 @@ export const TournamentsRoutes = {
         path: '/{id}',
         summary: 'Modify one tournament',
         description: 'Modify one tournament',
-        
-          headers: new Headers({ 'Content-Type': 'application/json' }),
-          request: {
+
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        request: {
             params: z.object({
                 id: z.string().uuid(),
-                
+
             }),
-            body:{
+            body: {
                 content: {
                     "application/json": {
-                        schema : TournamentSchema
+                        schema: TournamentSchema
                     }
                 }
             }
         },
         responses: {
-        201: {
-            description: 'Tournament modified',
-            content: {
-                "text/plain": {
-                    schema: z.string()
+            201: {
+                description: 'Tournament modified',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
                 }
             }
-        },
-        404: {
-            description: 'Tournament not found',
-            content: {
-                "text/plain": {
-                    schema: z.string()
-                }
-            }
-        }
 
-    }
+        }
     }),
 
     list: createRoute({
@@ -121,8 +121,8 @@ export const TournamentsRoutes = {
         path: '',
         summary: 'Get all tournaments',
         description: 'Get all tournaments',
-        request : {
-            query : TournamentSchema
+        request: {
+            query: TournamentSchema
         },
         responses: {
             200: {
@@ -176,7 +176,7 @@ export const TournamentsRoutes = {
                 id: z.string().uuid(),
                 competitorId: z.string().uuid()
             })
-            
+
         },
         responses: {
             201: {
@@ -216,7 +216,7 @@ export const TournamentsRoutes = {
                 id: z.string().uuid(),
                 idCompetitor: z.string().uuid()
             }),
-        
+
         },
         responses: {
             202: {
@@ -248,7 +248,7 @@ export const TournamentsRoutes = {
     }),
     getCompetitors: createRoute({
         method: 'get',
-        path : '/{id}/competitors',
+        path: '/{id}/competitors',
         summary: 'Get all competitors of a tournament',
         description: 'Get all competitors of a tournament',
         request: {
@@ -284,10 +284,10 @@ export const TournamentsRoutes = {
             params: z.object({
                 id: z.string().uuid()
             }),
-            body :{
-                content :{
-                    "application/json" : {
-                        schema : CategorySchemaCreate
+            body: {
+                content: {
+                    "application/json": {
+                        schema: CategorySchemaCreate
                     }
                 }
             }
@@ -311,6 +311,74 @@ export const TournamentsRoutes = {
             },
         }
     }),
+    deleteCategory: createRoute({
+        method: 'delete',
+        path: '/categories/{id}',
+        summary: 'Delete one category',
+        description: 'Delete one category by ID',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            202: {
+                description: 'Category deleted',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament or Category not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            }
+
+        }
+    }),
+    modifyCategory: createRoute({
+        method: 'put',
+        path: '/categories/{id}',
+        summary: 'Modify one category',
+        description: 'Modify one category',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            }),
+            body: {
+                content: {
+                    "application/json": {
+                        schema: CategorySchemaUpdate
+                    }
+                }
+            }
+        },
+        responses: {
+            201: {
+                description: 'Category modified',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+            404: {
+                description: 'Tournament or Category not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            }
+
+        }
+    }),
+
     listCategories: createRoute({
         method: 'get',
         path: '/{id}/categories',
@@ -379,12 +447,12 @@ export const TournamentsRoutes = {
                 id: z.string().uuid(),
                 categoryId: z.string().uuid()
             }),
-            body :{
-                content :{
-                    "application/json" : {
-                        schema : z.object({ 
+            body: {
+                content: {
+                    "application/json": {
+                        schema: z.object({
                             competitor_id: z.string().uuid()
-                         })
+                        })
                     }
                 }
             }
@@ -438,38 +506,8 @@ export const TournamentsRoutes = {
             },
         }
     }),
-    deleteCategory: createRoute({
-        method: 'delete',
-        path: '/categories/{categoryId}',
-        summary: 'Delete one category',
-        description: 'Delete one category by ID',
-        request: {
-            params: z.object({
-                categoryId: z.string().uuid()
-            })
-        },
-        responses: {
-            202: {
-                description: 'Category deleted',
-                content: {
-                    "text/plain": {
-                        schema: z.string()
-                    }
-                }
-            },
-            404: {
-                description: 'Tournament or Category not found',
-                content: {
-                    "text/plain": {
-                        schema: z.string()
-                    }
-                }
-            }
-
-        }
-    }),
     getCategoryCompetitors: createRoute({
-        method: 'get',  
+        method: 'get',
         path: '/categories/{categoryId}/competitors',
         summary: 'Get all competitors of a category',
         description: 'Get all competitors of a category',
@@ -524,7 +562,7 @@ export const TournamentsRoutes = {
                     }
                 }
             },
-                
+
         }
     }),
     startRankingPool: createRoute({
@@ -585,6 +623,36 @@ export const TournamentsRoutes = {
             },
         }
     }),
+    getMatch: createRoute({
+        method: 'get',
+        path: '/matches/{id}',
+        summary: 'Get one match',
+        description: 'Get one match by ID',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            200: {
+                description: 'Details of the match',
+                content: {
+                    'application/json': {
+                        schema: MatchSchema
+                    }
+                }
+            },
+            404: {
+                description: 'Match not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            }
+
+        }
+    }),
     getMatches: createRoute({
         method: 'get',
         path: '/categories/{id}/matches',
@@ -630,9 +698,9 @@ export const TournamentsRoutes = {
                 content: {
                     'application/json': {
                         schema: z.object({
-                            first : z.string().uuid(),
-                            second : z.string().uuid(),
-                            third : z.string().uuid()
+                            first: z.string().uuid(),
+                            second: z.string().uuid(),
+                            third: z.string().uuid()
                         })
                     }
                 }
@@ -647,8 +715,38 @@ export const TournamentsRoutes = {
             },
         }
     }),
+    getBracket: createRoute({
+        method: 'get',
+        path: '/categories/{id}/bracket',
+        summary: 'Get bracket of a category',
+        description: 'Get bracket of a category',
+        request: {
+            params: z.object({
+                id: z.string().uuid()
+            })
+        },
+        responses: {
+            200: {
+                description: 'Details of the bracket',
+                content: {
+                    'application/json': {
+                        schema: BracketMatchSchema
+                       }
+                       
+                    }
+            },
+            404: {
+                description: 'Category not found',
+                content: {
+                    "text/plain": {
+                        schema: z.string()
+                    }
+                }
+            },
+        }
+    }),
 
 
 
-    
+
 }
