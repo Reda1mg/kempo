@@ -8,6 +8,8 @@ import { TournamentCompetitorCategory } from "../../entities/tournament-competit
 import { Tournament } from "../../entities/Tournament.entity.ts";
 import { TournamentsRoutes } from "./tournaments.openapi.ts";
 import { CompetitorSchema } from "../../competitors/adapter-rest/competitors.schema.ts";
+import type { Bracket } from "../../matches/adapter-rest/matches.schema.ts";
+import { WeightCategory } from "../../entities/weight-category.ts";
 
 
 export function buildTournamentsRouter() {
@@ -274,15 +276,48 @@ export function buildTournamentsRouter() {
             return ctx.json(result, 200)
         })
         .openapi(TournamentsRoutes.deleteCategory, async (ctx) => {
-            const { categoryId } = ctx.req.valid('param')
+            const { id } = ctx.req.valid('param')
             const em = ctx.get("em")
-            const category = await em.findOne(Category, { id: categoryId })
+            const category = await em.findOne(Category, { id }, { populate: ['weight_category', 'age_group'] })
             if (category == null) {
                 return ctx.text("Category not found", 404);
             }
-            em.nativeDelete(Category, { id: categoryId })
+            em.nativeDelete(Category, { id })
             return ctx.text("Category deleted", 202)
         })
+        .openapi(TournamentsRoutes.modifyCategory, async (ctx) => {
+            const { id } = ctx.req.valid('param')
+            const body = ctx.req.valid('json')
+            const em = ctx.get("em")
+            const category = await em.findOne(Category, { id })
+            if (category == null) {
+                return ctx.text("Category not found", 404);
+            }
+            category.name = body.name ?? category.name
+            category.rank = body.rank ?? category.rank
+            category.gender = body.gender ?? category.gender
+            category.elimination_type = body.elimination_type ?? category.elimination_type
+
+            if (body.weight_category != null) {
+                const weightCategory = await em.findOne(WeightCategory, { id: body.weight_category })
+                if (weightCategory == null) {
+                    return ctx.text("Weight category not found", 404);
+                }
+                category.weight_category = weightCategory
+            }
+            if (body.age_group != null) {
+                const ageGroup = await em.findOne(AgeGroup, { id: body.age_group })
+                if (ageGroup == null) {
+                    return ctx.text("Age group not found", 404);
+                }
+                category.age_group = ageGroup
+            }
+
+            await em.persistAndFlush(category)
+            
+            return ctx.text("Category updated", 201);
+        })
+
         .openapi(TournamentsRoutes.getCategoryCompetitors, async (ctx) => {
             const { categoryId } = ctx.req.valid('param')
             const em = ctx.get("em")
@@ -524,6 +559,28 @@ export function buildTournamentsRouter() {
                 }
             }), 200)
         })
+        .openapi(TournamentsRoutes.getMatch, async (ctx) => {
+            const { id } = ctx.req.valid('param')
+            const em = ctx.get("em")
+            const match = await em.findOne(Match, { id }, { populate: ['competitor1', 'competitor2'] })
+            if (match == null) {
+                return ctx.text("Not found", 404);
+            }
+
+            return ctx.json({
+                id: match.id,
+                competitor1: match.competitor1?.id ?? null,
+                competitor2: match.competitor2?.id ?? null,
+                score1: match.score1, 
+                score2: match.score2,
+                category: match.category.id,
+                keikuka1: match.keikuka1,
+                keikuka2: match.keikuka2,
+                winner: match.winner?.id ?? null,
+                isFinished: match.isFinished,
+                pool_number: match.pool_number
+            }, 200)
+        })
         .openapi(TournamentsRoutes.getMatches, async (ctx) => {
             const { id } = ctx.req.valid('param')
             const em = ctx.get("em")
@@ -540,8 +597,8 @@ export function buildTournamentsRouter() {
             return ctx.json(matches.map((match) => {
                 return {
                     id: match.id,
-                    competitor1: match.competitor1.id,
-                    competitor2: match.competitor2.id,
+                    competitor1: match.competitor1?.id ?? null,
+                    competitor2: match.competitor2?.id ?? null,
                     score1: match.score1,
                     score2: match.score2,
                     category: match.category.id,
@@ -658,7 +715,39 @@ export function buildTournamentsRouter() {
             
 
         })
-    }
+        .openapi(TournamentsRoutes.getBracket, async (ctx) => {
+            const { id } = ctx.req.valid('param');
+            const em = ctx.get("em");
+
+            
+            const matches = await em.find(Match, { category: id }, { populate: ['competitor1', 'competitor2', 'next_match'] });
+            if (matches.length === 0) {
+                return ctx.text("No matches in this category", 404);
+            }
+
+            // Organize matches by rounds
+            const bracket: Bracket = {};
+            matches.forEach(match => {
+                const round = match.pool_number;
+                
+                const roundKey = `round-${round[round.length-1]}` as keyof Bracket;
+                if (!bracket[roundKey]) {
+                    bracket[roundKey] = [];
+                }
+                bracket[roundKey].push({
+                    id: match.id,
+                    competitor1: match.competitor1?.id ?? null,
+                    competitor2: match.competitor2?.id ?? null,
+                    winner: match.winner?.id ?? null,
+                    isFinished: match.isFinished,
+                    next_match: match.next_match ? match.next_match.id : null
+                });
+            });
+
+            return ctx.json(bracket, 200);
+        });
+}
+
 
 
 
