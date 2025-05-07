@@ -23,6 +23,8 @@ function App() {
           <Route path="/tournoiDetails/:id/ajouter-competiteurs" element={<AddCompetitorsToCategory />} />
           <Route path="/matches/:categoryId" element={<MatchesTable />} />
           <Route path="/matches/:matchId/scoreboard" element={<Scoreboard />} />
+          <Route path="/telecommande/:matchId" element={<Telecommande />} />
+
 
         </Routes>
       </Router>

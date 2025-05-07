@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./MatchesTable.module.css";
 
 const MatchesTable = () => {
   const { categoryId } = useParams();
-  const navigate = useNavigate();
   const [matches, setMatches] = useState([]);
   const [competitors, setCompetitors] = useState({});
   const [loading, setLoading] = useState(true);
@@ -49,9 +48,18 @@ const MatchesTable = () => {
     }
   };
 
-  const handleScoreboardClick = (matchId) => {
-    console.log("Navigating to scoreboard for match:", matchId);
-    navigate(`/matches/${matchId}/scoreboard`);
+  const handleStartMatch = (matchId) => {
+    const baseUrl = window.location.origin;
+
+    // Open only the telecommande view
+    const telecommandeWindow = window.open(
+      `${baseUrl}/telecommande/${matchId}`,
+      "_blank"
+    );
+
+    if (!telecommandeWindow) {
+      alert("Veuillez autoriser les popups dans votre navigateur.");
+    }
   };
 
   return (
@@ -85,9 +93,9 @@ const MatchesTable = () => {
                 <td>
                   <button
                     className={styles.scoreboardButton}
-                    onClick={() => handleScoreboardClick(m.id)}
+                    onClick={() => handleStartMatch(m.id)}
                   >
-                    Scoreboard
+                    Commencer
                   </button>
                 </td>
               </tr>

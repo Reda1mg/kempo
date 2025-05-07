@@ -125,4 +125,43 @@
   .end:hover {
     background: #a00000;
   }
+  .container {
+    width: 100vw;
+    height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+    background-color: #1e1e1e; /* optional: match your dark theme */
+    overflow-x: hidden;
+  }
+  .faute {
+    margin-left: 10px;
+    padding: 6px 10px;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .resetAll {
+    margin-left: 10px;
+    padding: 6px 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .faute {
+    margin-left: 10px;
+    padding: 6px 10px;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
   
