@@ -11,9 +11,12 @@ const NavBar = () => {
 
             <ul className={style.menu}>
                 <Link to="/"><li>🏠 Accueil</li></Link>
-                <li>📅 Tous les Tournois</li>
-                <li>📊 Score Board</li>
+                {/* <li>📅 Tous les Tournois</li> */}
+                {/* <li>📊 Score Board</li> */}
                 <Link to="/competiteurs"><li>👥 Compétiteurs</li></Link>
+                <Link to="/telecommande"><li>🎚️ Telecommande</li></Link>
+                <Link to="/scoreboard"><li>📺 Scoarboard</li></Link>
+
             </ul>
         </div>
     );
