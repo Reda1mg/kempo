@@ -5,11 +5,13 @@ import styles from "./Telecommande.module.css";
 
 const Telecommande = () => {
   const { matchId } = useParams();
-  const [competitor1, setCompetitor1] = useState({ firstname: "", lastname: "", club: "" });
-  const [competitor2, setCompetitor2] = useState({ firstname: "", lastname: "", club: "" });
+  const [competitor1, setCompetitor1] = useState({ id: "", firstname: "", lastname: "", club: "" });
+  const [competitor2, setCompetitor2] = useState({ id: "", firstname: "", lastname: "", club: "" });
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
-  const [time, setTime] = useState(180); // 3 minutes
+  const [keikuka1, setKeikuka1] = useState(0);
+  const [keikuka2, setKeikuka2] = useState(0);
+  const [time, setTime] = useState(180);
   const [isRunning, setIsRunning] = useState(false);
   const timerRef = useRef(null);
 
@@ -50,7 +52,10 @@ const Telecommande = () => {
   };
 
   const handleStart = () => {
-    if (time > 0) setIsRunning(true);
+    if (time > 0) {
+      setIsRunning(true);
+      window.open(`/scoreboard/${matchId}`, "_blank");
+    }
   };
 
   const handlePause = () => {
@@ -64,14 +69,34 @@ const Telecommande = () => {
     setTime(180);
   };
 
-  const handleEnd = () => {
+  const handleEnd = async () => {
     setIsRunning(false);
     clearInterval(timerRef.current);
     setTime(0);
+
+    const winner =
+      score1 > score2 ? competitor1.id :
+      score2 > score1 ? competitor2.id : "";
+
+    const payload = {
+      score1,
+      score2,
+      keikuka1,
+      keikuka2,
+      winner,
+    };
+
+    try {
+      const res = await axios.post(`http://localhost:3000/matches/${matchId}`, payload);
+      console.log("✅ Match data submitted:", res.data);
+    } catch (err) {
+      console.error("❌ Failed to submit match results:", err.response?.data || err.message);
+    }
   };
 
-  const applyFaute = (setScore) => {
+  const applyFaute = (setScore, setKeikuka) => {
     setScore(prev => Math.max(0, prev - 2));
+    setKeikuka(prev => prev + 1);
   };
 
   return (
@@ -86,7 +111,7 @@ const Telecommande = () => {
           <button className={styles.btn} onClick={() => setScore1(s => Math.max(0, s - 1))}>-</button>
           <div className={styles.score}>{score1}</div>
           <button className={styles.btn} onClick={() => setScore1(s => s + 1)}>+</button>
-          <button className={styles.faute} onClick={() => applyFaute(setScore1)}>Faute</button>
+          <button className={styles.faute} onClick={() => applyFaute(setScore1, setKeikuka1)}>Faute</button>
         </div>
       </div>
 
@@ -100,7 +125,7 @@ const Telecommande = () => {
           <button className={styles.btn} onClick={() => setScore2(s => Math.max(0, s - 1))}>-</button>
           <div className={styles.score}>{score2}</div>
           <button className={styles.btn} onClick={() => setScore2(s => s + 1)}>+</button>
-          <button className={styles.faute} onClick={() => applyFaute(setScore2)}>Faute</button>
+          <button className={styles.faute} onClick={() => applyFaute(setScore2, setKeikuka2)}>Faute</button>
         </div>
       </div>
 

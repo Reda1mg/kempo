@@ -13,14 +13,14 @@ const Scoreboard = () => {
     const fetchMatchAndCompetitors = async () => {
       try {
         const matchUrl = `http://localhost:3000/tournaments/matches/${matchId}`;
-        console.log("📦 Fetching match from:", matchUrl);
-
         const matchRes = await axios.get(matchUrl);
         const matchData = matchRes.data;
+
         setMatch(matchData);
 
-        const comp1Id = matchData.competitor1;
-        const comp2Id = matchData.competitor2;
+        // Adjust here if match.competitor1 is now an object
+        const comp1Id = matchData.competitor1?.id || matchData.competitor1;
+        const comp2Id = matchData.competitor2?.id || matchData.competitor2;
 
         const [comp1Res, comp2Res] = await Promise.all([
           axios.get(`http://localhost:3000/competitors/${comp1Id}`),
