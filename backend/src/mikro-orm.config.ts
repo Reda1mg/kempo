@@ -21,7 +21,7 @@ import { SeedManager } from '@mikro-orm/seeder';
 export default defineConfig({
   dbName: 'kempo_db',
   user: 'root',
-  password: 'secure-password',
+  password: '',
   host: 'localhost',
   port: 3306, // Port MySQL par défaut
   entities: [Tournament],
