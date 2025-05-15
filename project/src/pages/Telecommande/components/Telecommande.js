@@ -37,13 +37,36 @@ const Telecommande = () => {
   }, [matchId]);
 
   useEffect(() => {
-    if (isRunning && time > 0) {
+    if (isRunning) {
       timerRef.current = setInterval(() => {
-        setTime((prev) => prev - 1);
+        setTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(timerRef.current);
+            setIsRunning(false);
+            return 0;
+          }
+          return prev - 1;
+        });
       }, 1000);
     }
     return () => clearInterval(timerRef.current);
   }, [isRunning]);
+
+  useEffect(() => {
+    if (!isRunning) return;
+
+    const sync = setInterval(() => {
+      axios.post(`http://localhost:3001/matches/${matchId}/live`, {
+        score1,
+        score2,
+        keikuka1,
+        keikuka2,
+        time,
+      });
+    }, 1000);
+
+    return () => clearInterval(sync);
+  }, [isRunning, score1, score2, keikuka1, keikuka2, time]);
 
   const formatTime = (seconds) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");

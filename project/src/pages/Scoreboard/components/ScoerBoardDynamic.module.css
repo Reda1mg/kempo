@@ -78,3 +78,13 @@
   font-family: 'Digital-7 Mono', monospace;
   color: white;
 }
+.logoBlock {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.fullLogo {
+  height: 60px;
+  object-fit: contain;
+}

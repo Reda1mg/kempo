@@ -13,9 +13,10 @@ const MatchesTable = () => {
     const fetchMatches = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/tournaments/categories/${categoryId}/not-finished-matches`
+          `http://localhost:3000/tournaments/categories/${categoryId}/matches`
         );
         setMatches(res.data);
+        console.log(res.data);
 
         const uniqueIds = Array.from(
           new Set(res.data.flatMap((m) => [m.competitor1, m.competitor2]))
