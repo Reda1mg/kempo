@@ -19,9 +19,10 @@ import { SeedManager } from '@mikro-orm/seeder';
 // } as Parameters<typeof MikroORM.init>[0];
 
 export default defineConfig({
-  dbName: 'kempo_db',
+
+  dbName: 'kemp_grp',
   user: 'root',
-  password: 'secure-password',
+  password: '',
   host: 'localhost',
   port: 3306, // Port MySQL par défaut
   entities: [Tournament],

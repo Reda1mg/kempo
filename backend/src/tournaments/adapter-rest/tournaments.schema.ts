@@ -28,6 +28,9 @@ export const CategorySchema = z.object({
 
 export const CategorySchemaCreate = CategorySchema.omit({id : true})
 
+
+export const CategorySchemaUpdate = CategorySchema.omit({id : true}).partial()
+
 export type Category = z.infer<typeof CategorySchema>
     
 
