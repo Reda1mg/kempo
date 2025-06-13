@@ -1,5 +1,7 @@
 
+
 import TournoiTable from "./components/TournamentTable";
+
 import styles from "./home.module.css"
 
 function Home(){

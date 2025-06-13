@@ -19,6 +19,7 @@ import { SeedManager } from '@mikro-orm/seeder';
 // } as Parameters<typeof MikroORM.init>[0];
 
 export default defineConfig({
+
   dbName: 'kemp_grp',
   user: 'root',
   password: '',

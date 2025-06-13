@@ -10,6 +10,7 @@ const NavBar = () => {
             </div>
 
             <ul className={style.menu}>
+
                 <Link to="/"><li>🏠 Tournois</li></Link>
                 <Link to="/competiteurs"><li>👥 Compétiteurs</li></Link>
                 <Link to="/telecommande"><li>🎚️ Telecommande</li></Link>

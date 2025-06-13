@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import NavBar from './components/navbar/Navbar';
@@ -10,12 +11,14 @@ import AddCompetitorsToCategory from "./pages/TournoiDetails/Components/addCompe
 import MatchesTable from "./pages/Matches/Components/MatchesTable";
 import ScoreboardDynamic from "./pages/Scoreboard/components/ScoerBoardDynamic";
 
+
 function App() {
   return (
     <div className="App">
       <Router>
         <NavBar />
         <Routes>
+
           <Route path='/' element={<div className='content'><Home /></div>} />
           <Route path='/competiteurs' element={<div className='content'><Competitors /></div>} />
           <Route path='/telecommande' element={<div className='content'><Telecommande /></div>} />
@@ -24,6 +27,7 @@ function App() {
           <Route path="/matches/:categoryId" element={<MatchesTable />} />
           <Route path="/telecommande/:matchId" element={<Telecommande />} />
           <Route path="/scoreboard/:matchId" element={<ScoreboardDynamic />} />
+
         </Routes>
       </Router>
     </div>

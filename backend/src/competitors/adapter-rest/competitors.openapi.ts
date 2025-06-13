@@ -8,6 +8,7 @@ export const CompetitorsRoutes = {
         summary: 'Get one competitor',
         description: 'Get one competitor by ID',
         request: {
+
             params: z.object({
                 id: z.string().uuid()
             })
@@ -49,6 +50,7 @@ export const CompetitorsRoutes = {
         headers: new Headers({ 'Content-Type': 'application/json' }),
 
         responses: {
+
             201: {
                 description: 'Competitor created',
                 content: {
@@ -57,6 +59,7 @@ export const CompetitorsRoutes = {
                     }
                 }
             },
+
 
         }
     }),
@@ -81,6 +84,7 @@ export const CompetitorsRoutes = {
             }
         },
         responses: {
+
             201: {
                 description: 'Competitor modified',
                 content: {
@@ -97,6 +101,7 @@ export const CompetitorsRoutes = {
                     }
                 }
             }
+
 
         }
     }),
@@ -178,4 +183,5 @@ export const CompetitorsRoutes = {
     }),
 
     
+
 }

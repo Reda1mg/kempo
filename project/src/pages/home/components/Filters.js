@@ -1,4 +1,5 @@
 import styles from "./Filters.module.css";
+
 import CreationTournoi from './CreateTournament';
 
 const Filters = ({
@@ -7,6 +8,7 @@ const Filters = ({
   selectedDate,
   setSelectedDate,
 }) => {
+
   return (
     <div className={styles.filtersContainer}>
       {/* 🔎 Search by Name */}
@@ -35,6 +37,7 @@ const Filters = ({
       {/* ➕ Create Tournament Button */}
       <div className={styles.createBtn}>
         <CreationTournoi />
+
       </div>
     </div>
   );

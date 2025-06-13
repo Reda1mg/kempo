@@ -1,3 +1,4 @@
+
 import type { Query } from "@mikro-orm/migrations";
 import { getApp } from "../../api/get-app.ts";
 import { Category } from "../../entities/Category.entity.ts";
@@ -6,11 +7,13 @@ import { CompetitorsRoutes } from "./competitors.openapi.ts";
 import type { FilterQuery } from "@mikro-orm/core";
 
 export function buildCompetitorsRouter() {
+
     const router = getApp()
 
     return router.openapi(CompetitorsRoutes.get, async (ctx) => {
 
         const { id } = ctx.req.valid('param')
+
         const em = ctx.get("em");
         const result = await em.findOne(Competitor, { id })
         if (result == null) {
@@ -46,6 +49,7 @@ export function buildCompetitorsRouter() {
             const { id } = ctx.req.valid('param')
             const body = ctx.req.valid('json');
 
+
             const em = ctx.get("em");
             const result = await em.findOne(Competitor, { id })
             if (result == null) {
@@ -58,6 +62,7 @@ export function buildCompetitorsRouter() {
             result.club = body.club ?? result.club
             result.country = body.country ?? result.country
             result.weight = body.weight ?? result.weight
+
             result.rank = body.rank ?? result.rank
             result.gender = body.gender ?? result.gender
 
@@ -129,4 +134,5 @@ export function buildCompetitorsRouter() {
             const competitors = await em.find(Competitor, {}, { populate: ['rank'] })
             return ctx.json(competitors, 200)
         })
+
 }

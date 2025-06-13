@@ -1,10 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
+
 import { CategorySchema, CategorySchemaCreate, CategorySchemaUpdate, TournamentSchema } from "./tournaments.schema.ts";
 import { EnumRank } from "../../entities/Tournament.entity.ts";
 import { CompetitorSchema } from "../../competitors/adapter-rest/competitors.schema.ts";
 import { assign } from "@mikro-orm/core";
 import { Match } from "../../entities/match.entity.ts";
 import { BracketMatchSchema, MatchSchema } from "../../matches/adapter-rest/matches.schema.ts";
+
 
 export const TournamentsRoutes = {
     get: createRoute({
@@ -43,11 +45,13 @@ export const TournamentsRoutes = {
         path: '',
         summary: 'Create one tournament',
         description: 'Create one tournament',
+
         request: {
             body: {
                 content: {
                     "application/json": {
                         schema: z.object({
+
                             name: z.string(),
                             rank: z.nativeEnum(EnumRank).optional(),
                             city: z.string().optional(),
@@ -55,12 +59,15 @@ export const TournamentsRoutes = {
                             end_date: z.coerce.date().optional(),
                             age_group_id: z.coerce.number().optional()
 
+
                         })
+
                     }
                 }
             }
         },
         headers: new Headers({ 'Content-Type': 'application/json' }),
+
 
         responses: {
             201: {
@@ -73,6 +80,7 @@ export const TournamentsRoutes = {
             },
 
         }
+
     }),
 
     put: createRoute({
@@ -80,6 +88,7 @@ export const TournamentsRoutes = {
         path: '/{id}',
         summary: 'Modify one tournament',
         description: 'Modify one tournament',
+
 
         headers: new Headers({ 'Content-Type': 'application/json' }),
         request: {
@@ -91,11 +100,13 @@ export const TournamentsRoutes = {
                 content: {
                     "application/json": {
                         schema: TournamentSchema
+
                     }
                 }
             }
         },
         responses: {
+
             201: {
                 description: 'Tournament modified',
                 content: {
@@ -114,6 +125,7 @@ export const TournamentsRoutes = {
             }
 
         }
+
     }),
 
     list: createRoute({
@@ -121,8 +133,10 @@ export const TournamentsRoutes = {
         path: '',
         summary: 'Get all tournaments',
         description: 'Get all tournaments',
+
         request: {
             query: TournamentSchema
+
         },
         responses: {
             200: {
@@ -208,14 +222,18 @@ export const TournamentsRoutes = {
     }),
     deleteCompetitor: createRoute({
         method: 'delete',
+
         path: '/{id}/delete-competitor/{idCompetitor}',
+
         summary: 'Delete one competitor ',
         description: 'Delete one competitor on the tournament by competitor ID',
         request: {
             params: z.object({
+
                 id: z.string().uuid(),
                 idCompetitor: z.string().uuid()
             }),
+
 
         },
         responses: {
@@ -248,7 +266,9 @@ export const TournamentsRoutes = {
     }),
     getCompetitors: createRoute({
         method: 'get',
+
         path: '/{id}/competitors',
+
         summary: 'Get all competitors of a tournament',
         description: 'Get all competitors of a tournament',
         request: {
@@ -284,10 +304,12 @@ export const TournamentsRoutes = {
             params: z.object({
                 id: z.string().uuid()
             }),
+
             body: {
                 content: {
                     "application/json": {
                         schema: CategorySchemaCreate
+
                     }
                 }
             }
@@ -311,6 +333,7 @@ export const TournamentsRoutes = {
             },
         }
     }),
+
     deleteCategory: createRoute({
         method: 'delete',
         path: '/categories/{id}',
@@ -378,6 +401,7 @@ export const TournamentsRoutes = {
 
         }
     }),
+
 
     listCategories: createRoute({
         method: 'get',
@@ -447,12 +471,14 @@ export const TournamentsRoutes = {
                 id: z.string().uuid(),
                 categoryId: z.string().uuid()
             }),
+
             body: {
                 content: {
                     "application/json": {
                         schema: z.object({
                             competitor_id: z.string().uuid()
                         })
+
                     }
                 }
             }
@@ -506,17 +532,20 @@ export const TournamentsRoutes = {
             },
         }
     }),
+
     getCategoryCompetitors: createRoute({
         method: 'get',
         path: '/categories/{categoryId}/competitors',
         summary: 'Get all competitors of a category',
         description: 'Get all competitors of a category',
+
         request: {
             params: z.object({
                 categoryId: z.string().uuid()
             })
         },
         responses: {
+
             200: {
                 description: 'Details of the competitors',
                 content: {
@@ -578,6 +607,7 @@ export const TournamentsRoutes = {
         responses: {
             200: {
                 description: 'Ranking pool started',
+
                 content: {
                     "text/plain": {
                         schema: z.string()
@@ -591,6 +621,7 @@ export const TournamentsRoutes = {
                         schema: z.string()
                     }
                 }
+
             },
         }
     }),
@@ -690,10 +721,12 @@ export const TournamentsRoutes = {
         request: {
             params: z.object({
                 id: z.string().uuid()
+
             })
         },
         responses: {
             200: {
+
                 description: 'Details of the results',
                 content: {
                     'application/json': {
@@ -735,6 +768,7 @@ export const TournamentsRoutes = {
                        
                     }
             },
+
             404: {
                 description: 'Category not found',
                 content: {
@@ -745,6 +779,8 @@ export const TournamentsRoutes = {
             },
         }
     }),
+
+
 
 
 
