@@ -1,0 +1,282 @@
+/* Styles pour la télécommande intégrée dans le bracket */
+.telecommande {
+  background: #2c2c2e;
+  border-radius: 15px;
+  padding: 20px;
+  color: white;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3a3a3c;
+  padding-bottom: 15px;
+}
+
+.header h1 {
+  color: #007AFF;
+  margin: 0 0 10px 0;
+  font-size: 2em;
+}
+
+.matchInfo {
+  color: #8e8e93;
+  font-size: 1.2em;
+}
+
+.scoreBoard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.competitor {
+  flex: 1;
+  background: #3a3a3c;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.competitor h3 {
+  color: #007AFF;
+  margin: 0 0 10px 0;
+  font-size: 1.3em;
+}
+
+.club {
+  color: #8e8e93;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+}
+
+.score {
+  font-size: 3em;
+  font-weight: bold;
+  color: #34C759;
+  margin: 15px 0;
+}
+
+.keikuka {
+  color: #FF3B30;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.addBtn {
+  background: #34C759;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.addBtn:hover {
+  background: #28a745;
+  transform: translateY(-2px);
+}
+
+.removeBtn {
+  background: #FF3B30;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.removeBtn:hover {
+  background: #dc3545;
+  transform: translateY(-2px);
+}
+
+.faultBtn {
+  background: #FF9500;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.faultBtn:hover {
+  background: #e8900b;
+  transform: translateY(-2px);
+}
+
+.removeFaultBtn {
+  background: #8e8e93;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.removeFaultBtn:hover {
+  background: #6d6d70;
+  transform: translateY(-2px);
+}
+
+.timer {
+  flex: 1;
+  background: #1c1c1e;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #007AFF;
+}
+
+.timeDisplay {
+  font-size: 4em;
+  font-weight: bold;
+  color: #007AFF;
+  margin-bottom: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+.timerControls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.startBtn {
+  background: #34C759;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+}
+
+.startBtn:hover {
+  background: #28a745;
+  transform: translateY(-2px);
+}
+
+.pauseBtn {
+  background: #FF9500;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+}
+
+.pauseBtn:hover {
+  background: #e8900b;
+  transform: translateY(-2px);
+}
+
+.resetBtn {
+  background: #8e8e93;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+}
+
+.resetBtn:hover {
+  background: #6d6d70;
+  transform: translateY(-2px);
+}
+
+.globalControls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.resetMatchBtn {
+  background: #8e8e93;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+}
+
+.resetMatchBtn:hover {
+  background: #6d6d70;
+  transform: translateY(-2px);
+}
+
+.finishBtn {
+  background: #007AFF;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+}
+
+.finishBtn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.error {
+  background: #FF3B30;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2em;
+  margin: 20px;
+}
+
+.backButton {
+  background: #8e8e93;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover {
+  background: #6d6d70;
+  transform: translateY(-2px);
+}

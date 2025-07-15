@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Script de setup pour le projet Kempo Backend
+# Ce script configure la base de données et exécute les migrations
+
+echo "🚀 Setup du projet Kempo Backend"
+echo "================================="
+
+# Vérifier si MySQL est installé
+if ! command -v mysql &> /dev/null
+then
+    echo "❌ MySQL n'est pas installé ou n'est pas dans le PATH"
+    exit 1
+fi
+
+echo "✅ MySQL détecté"
+
+# Installer les dépendances npm
+echo "📦 Installation des dépendances npm..."
+npm install
+
+# Créer la base de données
+echo "🗄️ Configuration de la base de données..."
+echo "Veuillez entrer votre mot de passe MySQL root:"
+mysql -u root -p < setup-db.sql
+
+# Exécuter les migrations
+echo "🔄 Exécution des migrations..."
+npx mikro-orm-esm migration:up
+
+# Exécuter les seeders
+echo "🌱 Exécution des seeders..."
+npx mikro-orm-esm seeder:run
+
+echo "✅ Setup terminé avec succès!"
+echo "💡 Vous pouvez maintenant démarrer l'application avec: npm run dev"

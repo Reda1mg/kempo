@@ -1,0 +1,63 @@
+firstname,lastname,birthday,country,rank,gender,club,weight
+Alexandre,Martin,2010-03-15,France,Ceinture Blanche,H,Dojo Paris,35
+Léa,Dubois,2010-05-22,France,Ceinture Blanche,F,Dojo Lyon,32
+Thomas,Bernard,2010-07-10,France,Ceinture Blanche,H,Dojo Marseille,38
+Emma,Petit,2010-09-03,France,Ceinture Blanche,F,Dojo Toulouse,30
+Lucas,Moreau,2010-11-18,France,Ceinture Blanche,H,Dojo Nice,36
+Chloé,Simon,2010-01-25,France,Ceinture Blanche,F,Dojo Bordeaux,33
+Nathan,Michel,2010-04-08,France,Ceinture Blanche,H,Dojo Lille,37
+Sarah,Leroy,2010-06-12,France,Ceinture Blanche,F,Dojo Strasbourg,31
+Antoine,Roux,2008-02-14,France,Ceinture Blanche,H,Dojo Nantes,42
+Julie,Garnier,2008-04-20,France,Ceinture Blanche,F,Dojo Rennes,39
+Maxime,Faure,2008-06-18,France,Ceinture Blanche,H,Dojo Montpellier,43
+Clara,Blanc,2008-08-22,France,Ceinture Blanche,F,Dojo Reims,40
+Hugo,Lopez,2008-10-05,France,Ceinture Blanche,H,Dojo Dijon,45
+Manon,Fournier,2008-12-30,France,Ceinture Blanche,F,Dojo Angers,38
+Théo,Girard,2009-02-11,France,Ceinture Blanche,H,Dojo Brest,41
+Amélie,Morin,2009-04-17,France,Ceinture Blanche,F,Dojo Le Havre,36
+Kevin,Rousseau,2007-05-12,France,Ceinture Jaune,H,Dojo Orléans,48
+Camille,Vincent,2007-07-25,France,Ceinture Jaune,F,Dojo Troyes,45
+Dylan,Muller,2007-09-18,France,Ceinture Jaune,H,Dojo Clermont,50
+Inès,Lefevre,2007-11-03,France,Ceinture Jaune,F,Dojo Limoges,46
+Enzo,Andre,2007-01-14,France,Ceinture Jaune,H,Dojo Amiens,49
+Maeva,Mercier,2007-03-28,France,Ceinture Jaune,F,Dojo Perpignan,44
+Quentin,Dupont,2006-06-05,France,Ceinture Jaune,H,Dojo Caen,52
+Océane,Lemoine,2006-08-19,France,Ceinture Jaune,F,Dojo Bourges,47
+Romain,Bonnet,2006-10-12,France,Ceinture Jaune,H,Dojo Metz,53
+Jade,Joly,2006-12-25,France,Ceinture Jaune,F,Dojo Nancy,48
+Valentin,Gautier,2006-02-08,France,Ceinture Jaune,H,Dojo Poitiers,51
+Lola,Picard,2006-04-21,France,Ceinture Jaune,F,Dojo La Rochelle,46
+Bastien,Fernandez,2005-07-15,France,Ceinture Jaune,H,Dojo Avignon,55
+Morgane,Chevalier,2005-09-30,France,Ceinture Jaune,F,Dojo Besançon,49
+Florian,Renard,2005-11-22,France,Ceinture Jaune,H,Dojo Chambéry,56
+Pauline,Garnier,2005-01-05,France,Ceinture Jaune,F,Dojo Ajaccio,50
+Axel,Barbier,2004-03-18,France,Ceinture Orange,H,Dojo Bastia,58
+Manon,Berger,2004-05-31,France,Ceinture Orange,F,Dojo Calais,52
+Loic,Giraud,2004-07-24,France,Ceinture Orange,H,Dojo Dunkerque,60
+Chloé,Fabre,2004-09-07,France,Ceinture Orange,F,Dojo Arras,53
+Julien,Morel,2004-11-20,France,Ceinture Orange,H,Dojo Beauvais,59
+Léna,Blanc,2004-01-13,France,Ceinture Orange,F,Dojo Chartres,51
+Mehdi,Renault,2003-04-26,France,Ceinture Verte,H,Dojo Rouen,62
+Anaïs,Gaillard,2003-06-09,France,Ceinture Verte,F,Dojo Le Mans,54
+Yann,Brun,2003-08-22,France,Ceinture Verte,H,Dojo Tours,64
+Elise,Lemaire,2003-10-15,France,Ceinture Verte,F,Dojo Annecy,56
+Kévin,Poulain,2003-12-28,France,Ceinture Verte,H,Dojo Grenoble,63
+Margot,Hubert,2003-02-11,France,Ceinture Verte,F,Dojo Valence,55
+Adrien,Marchand,2002-05-24,France,Ceinture Bleue,H,Dojo Saint-Étienne,66
+Justine,Noel,2002-07-17,France,Ceinture Bleue,F,Dojo Mulhouse,58
+Nicolas,Dufour,2002-09-30,France,Ceinture Bleue,H,Dojo Colmar,68
+Céline,Girard,2002-11-13,France,Ceinture Bleue,F,Dojo Belfort,57
+Thibaut,Leclerc,2002-01-26,France,Ceinture Bleue,H,Dojo Montbéliard,67
+Sandrine,Roussel,2002-03-19,France,Ceinture Bleue,F,Dojo Vesoul,56
+Sébastien,Durand,2001-06-02,France,Ceinture Marron,H,Dojo Mâcon,70
+Aurore,Moreau,2001-08-15,France,Ceinture Marron,F,Dojo Chalon,59
+Matthieu,Leroy,2001-10-28,France,Ceinture Marron,H,Dojo Nevers,72
+Coralie,Simon,2001-12-11,France,Ceinture Marron,F,Dojo Auxerre,60
+Jérôme,Michel,2001-02-24,France,Ceinture Marron,H,Dojo Sens,71
+Virginie,Petit,2001-04-07,France,Ceinture Marron,F,Dojo Melun,58
+Damien,Roux,2000-07-20,France,Ceinture Noire 1ère dan,H,Dojo Fontainebleau,74
+Aurélie,Fournier,2000-09-12,France,Ceinture Noire 1ère dan,F,Dojo Meaux,61
+Christophe,Girard,2000-11-25,France,Ceinture Noire 1ère dan,H,Dojo Provins,76
+Stephanie,Morin,2000-01-08,France,Ceinture Noire 1ère dan,F,Dojo Nemours,62
+Philippe,Blanc,1999-03-21,France,Ceinture Noire 2ème dan,H,Dojo Montereau,78
+Nathalie,Lopez,1999-05-14,France,Ceinture Noire 2ème dan,F,Dojo Coulommiers,63

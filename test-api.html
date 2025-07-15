@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Match API</title>
+</head>
+<body>
+    <h1>Test Match API</h1>
+    <button onclick="testMatchAPI()">Test Match API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testMatchAPI() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                // Test 1: Vérifier si le serveur backend est accessible
+                const response = await fetch('http://localhost:8000/matches/category/test');
+                resultDiv.innerHTML = '<p>Backend accessible, status: ' + response.status + '</p>';
+                
+                // Test 2: Vérifier la route pour récupérer un match individuel
+                const matchResponse = await fetch('http://localhost:8000/matches/test-match-id');
+                resultDiv.innerHTML += '<p>Match endpoint accessible, status: ' + matchResponse.status + '</p>';
+                
+            } catch (error) {
+                resultDiv.innerHTML = '<p>Erreur: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>
