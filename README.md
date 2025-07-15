@@ -16,6 +16,7 @@ Application de gestion de tournois de Kempo avec système de bracket, télécomm
 - ✅ Scoreboard dynamique synchronisé
 - ✅ Gestion des scores, fautes (keikuka) et timer
 - ✅ Communication cross-tab en temps réel
+- ✅ Page Support avec intégration Jira Service Desk
 
 ## Structure du projet
 ```
@@ -52,7 +53,8 @@ node mock-server.js
 - Mock Server: http://localhost:8000
 
 ## Version
-Version actuelle: v1.0.0-telecommande-sync
+Version actuelle: v1.1.0-support-page
 - Télécommande fonctionnelle
 - Synchronisation temps réel
 - Design moderne et responsive
+- Page Support avec intégration Jira Service Desk
