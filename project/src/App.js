@@ -14,6 +14,7 @@ import Bracket from "./pages/Bracket/Bracket";
 import BracketTest from "./pages/Bracket/BracketTest";
 import BracketTreeTest from "./pages/Bracket/BracketTreeTest";
 import Match from "./pages/Match/Match";
+import Support from "./pages/Support/Support";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/match/:matchId" element={<Match />} />
           <Route path="/telecommande/:matchId" element={<Telecommande />} />
           <Route path="/scoreboard/:matchId" element={<ScoreboardDynamic />} />
+          <Route path="/support" element={<div className='content'><Support /></div>} />
 
         </Routes>
       </Router>
