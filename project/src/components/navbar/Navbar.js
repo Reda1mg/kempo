@@ -10,14 +10,16 @@ const NavBar = () => {
             </div>
 
             <ul className={style.menu}>
-
                 <Link to="/"><li>🏠 Tournois</li></Link>
                 <Link to="/competiteurs"><li>👥 Compétiteurs</li></Link>
                 <Link to="/telecommande"><li>🎚️ Telecommande</li></Link>
-                <Link to="/support"><li>🎫 Support</li></Link>
                 {/* <Link to="/scoreboard"><li>📺 Scoarboard</li></Link> */}
-
             </ul>
+
+            {/* Support button at bottom */}
+            <div className={style.supportSection}>
+                <Link to="/support"><li className={style.supportButton}>🎫 Support</li></Link>
+            </div>
         </div>
     );
 };
